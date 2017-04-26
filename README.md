@@ -1,0 +1,7 @@
+# Instalación de Jenkins 2 en Ubuntu 16.04 LTS
+
+Heramientas y Métodos de Ingeniería del Software
+
+Version 1.0, Abril-2017
+
+Joaquín Cañadas
