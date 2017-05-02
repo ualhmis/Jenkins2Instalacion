@@ -472,12 +472,13 @@ Más info: https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scan
 ### Actualización de Jenkins
 
 Si al iniciar Jenkins como administradores nos aparece un mensaje indicando que una nueva versión de Jenkins está disponible, es aconsejable actualizar. 
+
 image::images/new-version.png[Disponible nueva version de Jenkins]
 
 Para ello:
 
 * Administrar Jenkins / Prepare for Shutdown
-+
+
 image::images/prepare-for-shutdown.png[Prepare for shutdown]
 
 * Desde la consola ssh: 
