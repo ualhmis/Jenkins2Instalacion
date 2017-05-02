@@ -472,6 +472,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#trueconfiguraci-n-de-sonar">10.2. Configuración de Sonar</a></li>
 </ul>
 </li>
+<li><a href="#trueactualizaci-n">11. Actualización</a>
+<ul class="sectlevel2">
+<li><a href="#trueactualizaci-n-de-jenkins">11.1. Actualización de Jenkins</a></li>
+<li><a href="#trueactualizaci-n-de-plugins">11.2. Actualización de plugins</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#truebibliograf-a">Bibliografía</a>
@@ -674,7 +680,7 @@ sudo apt-get install -y jenkins</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>systemctl start jenkins</pre>
+<pre>sudo systemctl start jenkins</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -748,12 +754,12 @@ To activate the new configuration, you need to run:
 </div>
 </div>
 <div class="paragraph">
-<p>Copiamos el siguiente texto como contenido del archivo:</p>
+<p>Copiamos el siguiente texto como contenido del archivo, sustituyendo el texto <em>JENKINS.MACHINE.IP</em> por al IP de la máquina (ver ejemplo en la captura de pantalla abajo):</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-conf" data-lang="conf">&lt;Virtualhost *:80&gt;
-    ServerName        my.jenkins.id
+    ServerName        JENKINS.MACHINE.IP
     ProxyRequests     Off
     ProxyPreserveHost On
     AllowEncodedSlashes NoDecode
@@ -765,7 +771,7 @@ To activate the new configuration, you need to run:
 
     ProxyPass         /  http://localhost:8080/ nocanon
     ProxyPassReverse  /  http://localhost:8080/
-    ProxyPassReverse  /  http://my.jenkins.id/
+    ProxyPassReverse  /  http://JENKINS.MACHINE.IP/
 &lt;/Virtualhost&gt;</code></pre>
 </div>
 </div>
@@ -1349,6 +1355,69 @@ Descender en la página a la sección de configuración <strong>SonarQube Scanne
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="trueactualizaci-n"><a class="anchor" href="#trueactualizaci-n"></a>11. Actualización</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="trueactualizaci-n-de-jenkins"><a class="anchor" href="#trueactualizaci-n-de-jenkins"></a>11.1. Actualización de Jenkins</h3>
+<div class="paragraph">
+<p>Si al iniciar Jenkins como administradores nos aparece un mensaje indicando que una nueva versión de Jenkins está disponible, es aconsejable actualizar.
+image::images/new-version.png[Disponible nueva version de Jenkins]</p>
+</div>
+<div class="paragraph">
+<p>Para ello:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Administrar Jenkins / Prepare for Shutdown</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/prepare-for-shutdown.png" alt="Prepare for shutdown">
+</div>
+</div>
+</li>
+<li>
+<p>Desde la consola ssh:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash" data-lang="bash">sudo apt-get update -y
+sudo apt-get upgrade -y</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="trueactualizaci-n-de-plugins"><a class="anchor" href="#trueactualizaci-n-de-plugins"></a>11.2. Actualización de plugins</h3>
+<div class="paragraph">
+<p>El enlace para gestionar los plugins nos muestra si hay actualizaciones disponibles</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/manage-plugins-update.png" alt="Actualizaciones de plugins disponibles">
+</div>
+</div>
+<div class="paragraph">
+<p>Entramos y marcamos todos con <em>All</em> , y hacemos clic en <em>Descargar ahora e instalar después de reiniciar</em></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/plugins-update-all.png" alt="Actualizar todos los plugins">
+</div>
+</div>
+<div class="paragraph">
+<p>Tras ello, marcamos <em>Reiniciar Jenkins&#8230;&#8203;</em></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/plugins-restart.png" alt="Reiniciar Jenkins...">
+</div>
+</div>
+</div>
+</div>
+</div>
 <h1 id="truebibliograf-a" class="sect0"><a class="anchor" href="#truebibliograf-a"></a>Bibliografía</h1>
 <div class="sect1">
 <h2 id="truereferencias"><a class="anchor" href="#truereferencias"></a>Referencias</h2>
@@ -1372,7 +1441,7 @@ Descender en la página a la sección de configuración <strong>SonarQube Scanne
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2017-04-26 20:22:27 H
+Last updated 2017-05-02 15:08:07 H
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/github.min.css">

@@ -467,6 +467,40 @@ Por último guardar la configuración.
 
 Más info: https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner+for+Jenkins[SonarQube Scanner for Jenkins]
 
+
+## Actualización
+### Actualización de Jenkins
+
+Si al iniciar Jenkins como administradores nos aparece un mensaje indicando que una nueva versión de Jenkins está disponible, es aconsejable actualizar. 
+image::images/new-version.png[Disponible nueva version de Jenkins]
+
+Para ello:
+
+* Administrar Jenkins / Prepare for Shutdown
++
+image::images/prepare-for-shutdown.png[Prepare for shutdown]
+
+* Desde la consola ssh: 
++
+[source,bash]
+----
+sudo apt-get update -y
+sudo apt-get upgrade -y
+----
+
+### Actualización de plugins
+
+El enlace para gestionar los plugins nos muestra si hay actualizaciones disponibles
+
+image::images/manage-plugins-update.png[Actualizaciones de plugins disponibles]
+
+Entramos y marcamos todos con _All_ , y hacemos clic en _Descargar ahora e instalar después de reiniciar_
+
+image::images/plugins-update-all.png[Actualizar todos los plugins]
+
+Tras ello, marcamos _Reiniciar Jenkins..._
+
+image::images/plugins-restart.png[Reiniciar Jenkins...]
 :numbered!:
 
 # Bibliografía
