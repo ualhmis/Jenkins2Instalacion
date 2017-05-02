@@ -136,7 +136,7 @@ sudo apt-get install -y jenkins
 
 A continuación, levantamos el servicio:
 [listing]
-systemctl start jenkins	
+sudo systemctl start jenkins	
 
 Y comprobamos que Jenkins está funcionando en el puerto 8080
 [listing]
