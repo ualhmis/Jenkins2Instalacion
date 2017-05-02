@@ -181,12 +181,12 @@ A continuación, creamos un nuevo archivo de host virtual en la carpeta 'sites-a
 [listing]
 sudo nano /etc/apache2/sites-available/jenkins.conf
 
-Copiamos el siguiente texto como contenido del archivo:
+Copiamos el siguiente texto como contenido del archivo, sustituyendo el texto _JENKINS.MACHINE.IP_ por al IP de la máquina (ver ejemplo en la captura de pantalla abajo):
 
 [source,conf]
 ----
 <Virtualhost *:80>
-    ServerName        my.jenkins.id
+    ServerName        JENKINS.MACHINE.IP
     ProxyRequests     Off
     ProxyPreserveHost On
     AllowEncodedSlashes NoDecode
@@ -198,7 +198,7 @@ Copiamos el siguiente texto como contenido del archivo:
  
     ProxyPass         /  http://localhost:8080/ nocanon
     ProxyPassReverse  /  http://localhost:8080/
-    ProxyPassReverse  /  http://my.jenkins.id/
+    ProxyPassReverse  /  http://JENKINS.MACHINE.IP/
 </Virtualhost>
 ----
 
