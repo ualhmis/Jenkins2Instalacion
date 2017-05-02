@@ -479,7 +479,7 @@ Para ello:
 
 * Administrar Jenkins / Prepare for Shutdown
 
-image::images/prepare-for-shutdown.png[Prepare for shutdown]
+image::images/prepare-for-shutdown.png[Prepare for shutdown...]
 
 * Desde la consola ssh: 
 +
