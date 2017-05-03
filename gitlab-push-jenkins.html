@@ -7,7 +7,7 @@
 <meta name="generator" content="Asciidoctor 1.5.5.dev">
 <meta name="keywords" content="Jenkins">
 <meta name="author" content="Heramientas y Métodos de Ingeniería del Software">
-<title>Instalación de Jenkins 2 en Ubuntu 16.04 LTS</title>
+<title>Lanzar la construcción de un proyecto en Jenkins al hacer push sobre repositorios privados en GitLab</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -422,69 +422,25 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="book toc2 toc-right">
 <div id="header">
-<h1>Instalación de Jenkins 2 en Ubuntu 16.04 LTS</h1>
+<h1>Lanzar la construcción de un proyecto en Jenkins al hacer push sobre repositorios privados en GitLab</h1>
 <div class="details">
 <span id="author" class="author">Heramientas y Métodos de Ingeniería del Software</span><br>
 <span id="revnumber">version 1.0,</span>
-<span id="revdate">Abril-2017</span>
+<span id="revdate">Mayo-2017</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Tabla de contenidos</div>
 <ul class="sectlevel0">
-<li><a href="#trueprerequisitos">Prerequisitos</a>
+<li><a href="#truerequisitos">Requisitos</a></li>
+<li><a href="#trueconfiguraci-n">Configuración</a>
 <ul class="sectlevel1">
-<li><a href="#trueactualizacion-del-sistema">1. Actualizacion del sistema</a>
-<ul class="sectlevel2">
-<li><a href="#truemensaje-de-reinicio">1.1. Mensaje de reinicio</a></li>
-<li><a href="#trueactualizaci-n-del-nombre-del-host">1.2. Actualización del nombre del host</a></li>
+<li><a href="#trueusuario-de-gitlab">1. Usuario de GitLab</a></li>
+<li><a href="#trueconfiguraci-n-del-servidor-jenkins">2. Configuración del servidor Jenkins</a></li>
+<li><a href="#trueconfiguraci-n-del-proyecto-jenkins">3. Configuración del proyecto Jenkins</a></li>
+<li><a href="#trueconfiguraci-n-del-repositorio-gitlab">4. Configuración del repositorio GitLab</a></li>
 </ul>
 </li>
-<li><a href="#trueinstalar-java">2. Instalar Java</a>
-<ul class="sectlevel2">
-<li><a href="#truedefiniendo-la-variable-de-entorno-java_home">2.1. Definiendo la Variable de Entorno JAVA_HOME</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#trueinstalaci-n-de-jenkins-2">Instalación de Jenkins 2</a>
-<ul class="sectlevel1">
-<li><a href="#trueinstalaci-n-de-jenkins-mediante-paquetes">3. Instalación de Jenkins mediante paquetes</a></li>
-<li><a href="#trueinstalaci-n-de-apache2-como-proxy-inverso">4. Instalación de Apache2 como Proxy Inverso</a></li>
-</ul>
-</li>
-<li><a href="#trueconfiguraci-n-de-jenkins-2">Configuración de Jenkins 2</a>
-<ul class="sectlevel1">
-<li><a href="#trueprimera-configuraci-n-de-jenkins">5. Primera configuración de Jenkins</a></li>
-<li><a href="#truesecurizando-jenkins">6. Securizando Jenkins</a></li>
-<li><a href="#trueprobando-un-primer-proyecto">7. Probando un primer proyecto</a></li>
-<li><a href="#trueconfiguraci-n-de-herramientas">8. Configuración de herramientas</a>
-<ul class="sectlevel2">
-<li><a href="#truejdk">8.1. JDK</a></li>
-<li><a href="#truegit">8.2. Git</a></li>
-<li><a href="#trueant">8.3. Ant</a></li>
-<li><a href="#truemaven">8.4. Maven</a></li>
-</ul>
-</li>
-<li><a href="#trueinstalaci-n-de-plugins">9. Instalación de plugins</a></li>
-<li><a href="#trueconfiguraci-n-adicional-opcional">10. Configuración Adicional (opcional)</a>
-<ul class="sectlevel2">
-<li><a href="#trueconfiguraci-n-de-gitlab">10.1. Configuración de GitLab</a></li>
-<li><a href="#trueconfiguraci-n-de-sonar">10.2. Configuración de Sonar</a></li>
-</ul>
-</li>
-<li><a href="#trueactualizaci-n">11. Actualización</a>
-<ul class="sectlevel2">
-<li><a href="#trueactualizaci-n-de-jenkins">11.1. Actualización de Jenkins</a></li>
-<li><a href="#trueactualizaci-n-de-plugins">11.2. Actualización de plugins</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#truebibliograf-a">Bibliografía</a>
-<ul class="sectlevel1">
-<li><a href="#truereferencias">Referencias</a></li>
-</ul>
-</li>
+<li><a href="#truebibliograf-a">Bibliografía</a></li>
 </ul>
 </div>
 </div>
@@ -496,802 +452,260 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div class="quoteblock abstract">
 <blockquote>
-Tutorial de instalación de Jenkins 2 en Ubuntu 16.04 LTS.
+Configuración de proyectos Jenkins y repositorios privados en GitLab para que se lance la construcción automáticamente en Jenkins cada vez que se realice un <em>push</em> en el repositorio en GitLab
 </blockquote>
 </div>
-<div class="ulist">
-<div class="title">Objetivos</div>
-<ul>
-<li>
-<p>Actualizar el sistema Ubuntu 16.04 en caso de que sea necesario</p>
-</li>
-<li>
-<p>Instalar Jenkins 2 (última versión)</p>
-</li>
-<li>
-<p>Configurar un proxy inverso</p>
-</li>
-<li>
-<p>Primeros pasos en Jenkins: configuración básica y plugins</p>
-</li>
-</ul>
 </div>
 </div>
+<h1 id="truerequisitos" class="sect0"><a class="anchor" href="#truerequisitos"></a>Requisitos</h1>
+<div class="openblock partintro">
+<div class="content">
+Los siguientes plugins deben estar instalados en Jenkins: <a href="https://wiki.jenkins-ci.org/display/JENKINS/GitLab+Plugin">Jenkins GitLab Plugin</a> y <a href="https://wiki.jenkins-ci.org/display/JENKINS/Git+Plugin">Jenkins Git Plugin</a>
 </div>
-<h1 id="trueprerequisitos" class="sect0"><a class="anchor" href="#trueprerequisitos"></a>Prerequisitos</h1>
+</div>
+<h1 id="trueconfiguraci-n" class="sect0"><a class="anchor" href="#trueconfiguraci-n"></a>Configuración</h1>
 <div class="sect1">
-<h2 id="trueactualizacion-del-sistema"><a class="anchor" href="#trueactualizacion-del-sistema"></a>1. Actualizacion del sistema</h2>
+<h2 id="trueusuario-de-gitlab"><a class="anchor" href="#trueusuario-de-gitlab"></a>1. Usuario de GitLab</h2>
 <div class="sectionbody">
-<div class="sect2">
-<h3 id="truemensaje-de-reinicio"><a class="anchor" href="#truemensaje-de-reinicio"></a>1.1. Mensaje de reinicio</h3>
 <div class="paragraph">
-<p>Si aparece el mensaje <strong>* System restart required </strong>*
-ejecutar</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>sudo reboot -h now</pre>
-</div>
+<p>Copie el API token privado de su cuenta en GitLab en  <strong>Profile Settings &#8594;
+Account</strong>. Lo necesitará más adelante para la configuración del servidor Jenkins.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/Picture1.png" alt="Reiniciar el sistema">
-</div>
-</div>
-<div class="paragraph">
-<p>Tras ello, actualizar los paquetes</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>sudo apt-get update -y</pre>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="trueactualizaci-n-del-nombre-del-host"><a class="anchor" href="#trueactualizaci-n-del-nombre-del-host"></a>1.2. Actualización del nombre del host</h3>
-<div class="paragraph">
-<p>Es posible que cuando ejecutemos una instrucción con <strong>sudo</strong> nos aparezca un mensaje de error</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash" data-lang="bash">Unable to resolve host...</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>En ese caso, debemos actualizar el archivo /etc/hosts con el nombre del host. Para ello, ejecutamos</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>more /etc/hostname</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Esto mostrará el nombre del host. A continuación editamos el documento /etc/hosts y añadimos el nombre del host en la segunda linea junto a 127.0.0.1</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>sudo nano /etc/hosts</pre>
-</div>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/Picture2.png" alt="Actualización del nombre del host en /etc/hosts">
-</div>
+<img src="images/gitlab-token.png" alt="gitlab token">
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="trueinstalar-java"><a class="anchor" href="#trueinstalar-java"></a>2. Instalar Java</h2>
+<h2 id="trueconfiguraci-n-del-servidor-jenkins"><a class="anchor" href="#trueconfiguraci-n-del-servidor-jenkins"></a>2. Configuración del servidor Jenkins</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Puede instalar el JDK con el siguiente comando</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>sudo apt-get install default-jdk -y</pre>
-</div>
+<p>Vaya a <strong>Administrar Jenkins &#8594; Configuración del sistema </strong></p>
 </div>
 <div class="paragraph">
-<p>Puede comprobar si hay varias instalaciones de Java en uel servidor:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>sudo update-alternatives --config java -l</pre>
-</div>
-</div>
-<div class="sect2">
-<h3 id="truedefiniendo-la-variable-de-entorno-java_home"><a class="anchor" href="#truedefiniendo-la-variable-de-entorno-java_home"></a>2.1. Definiendo la Variable de Entorno JAVA_HOME</h3>
-<div class="listingblock">
-<div class="content">
-<pre>sudo nano /etc/environment</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Al final de este archivo, agregue la siguiente línea, asegurándose de sustituir la ruta resaltada con la  ruta de jdk en su sistema.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash" data-lang="bash">JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64/jre"</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Guarde, salga del archivo y vuelva a cargarlo.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>source /etc/environment</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Ahora puede probar si la variable de entorno se ha establecido mediante la ejecución del siguiente comando:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash" data-lang="bash">echo $JAVA_HOME</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Esto devolverá la ruta que acaba de establecer.</p>
+<p>Descienda hasta la sección <strong>Gitlab</strong></p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/Picture3.png" alt="JAVA_HOME">
-</div>
-</div>
-</div>
-</div>
-</div>
-<h1 id="trueinstalaci-n-de-jenkins-2" class="sect0"><a class="anchor" href="#trueinstalaci-n-de-jenkins-2"></a>Instalación de Jenkins 2</h1>
-<div class="sect1">
-<h2 id="trueinstalaci-n-de-jenkins-mediante-paquetes"><a class="anchor" href="#trueinstalaci-n-de-jenkins-mediante-paquetes"></a>3. Instalación de Jenkins mediante paquetes</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Instalaremos Jenkins en un sistema operativo basado en Ubuntu 16.04 LTS. La instalación consiste en añadir los repositorios de Jenkins, actualizar nuestro sistema de repositorios y una vez acabado, instalar Jenkins.</p>
-</div>
-<div class="admonitionblock important">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-Como prerequsito es necesario tener instalado Java. Compruebe que está configurado JAVA_HOME
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>Instalaremos Jenkins de la rama Stable (versión LTS). Hay que tener en cuenta que esta versión de Jenkins se actualiza cada 12 semanas. Si queréis más información sobre la versión LTS de Jenkins, os dejo el enlace donde lo explica: <a href="https://wiki.jenkins-ci.org/display/JENKINS/LTS+Release+Line" class="bare">https://wiki.jenkins-ci.org/display/JENKINS/LTS+Release+Line</a></p>
-</div>
-<div class="paragraph">
-<p>Lo primero que haremos es añadir los repositorios de Jenkins e instalarlo mediante apt-get:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash" data-lang="bash">wget -q -O - https://pkg.jenkins.io/debian/jenkins-ci.org.key | sudo apt-key add –
-sudo sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ &gt; /etc/apt/sources.list.d/jenkins.list'
-sudo apt-get update
-sudo apt-get install -y jenkins</code></pre>
+<img src="images/jenkins-gitlab-global-conf.png" alt="jenkins-gitlab-global-conf">
 </div>
 </div>
 <div class="paragraph">
-<p>A continuación, levantamos el servicio:</p>
+<p>Introduzca:</p>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre>sudo systemctl start jenkins</pre>
+<div class="ulist">
+<ul>
+<li>
+<p>Un nombre para la conexión al servidor GitLab</p>
+</li>
+<li>
+<p>La URL del servidor GitLab</p>
+</li>
+<li>
+<p>Añada las credenciales para GitLab usando el token de su usuario:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Seleccione <em>GitLab API token</em></p>
+</li>
+<li>
+<p>Pegue el token copiado anteriormente</p>
+</li>
+<li>
+<p>Escriba un identificador de la credencial</p>
+</li>
+</ul>
 </div>
-</div>
-<div class="paragraph">
-<p>Y comprobamos que Jenkins está funcionando en el puerto 8080</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>netstat -plntu</pre>
-</div>
+</li>
+</ul>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/Picture4.png" alt="Listado puertos activos">
+<img src="images/jenkins-gitlab-token-credentials.png" alt="jenkins-gitlab-token-credentials">
 </div>
 </div>
 <div class="paragraph">
-<p>Una vez realizada la instalación por defecto Jenkins estará escuchando en el puerto 8080. Podemos comprobarlo:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>curl localhost:8080</pre>
-</div>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/Picture5.png" alt="Respuesta de Jenkins en el 8080">
-</div>
-</div>
-<div class="paragraph">
-<p>Necesitamos instalar un apache o nginx en modo <strong>Reverse Proxy</strong> para poder acceder a la administración de Jenkins mediante el puerto 80 (HTTP).</p>
+<p>Una vez añadida la credencial, seleccionelá. Pruebe la conexión con <strong>Test connection</strong>.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="trueinstalaci-n-de-apache2-como-proxy-inverso"><a class="anchor" href="#trueinstalaci-n-de-apache2-como-proxy-inverso"></a>4. Instalación de Apache2 como Proxy Inverso</h2>
+<h2 id="trueconfiguraci-n-del-proyecto-jenkins"><a class="anchor" href="#trueconfiguraci-n-del-proyecto-jenkins"></a>3. Configuración del proyecto Jenkins</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Instalamos Apache2 y lo configuramos para que actue como proxy inverso del puerto 8080.</p>
+<p>Cree una <strong>nueva tarea</strong> en Jenkins.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>En la sección <em>Gestión de Código Fuente</em>:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Seleccione Git</p>
+</li>
+<li>
+<p>Introduzca la URL del repositorio en GitLab</p>
+</li>
+<li>
+<p>Añada las credenciales para acceder al repo en GitLab</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/jenkins-scm-git-ssh.png" alt="jenkins-scm-git-ssh">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Si ha utilizado la URL <em>https</em> del repositorio, tendrá que introducir las credenciales tipo <em>usuario/contraseña</em> de GitLab.</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/gitlab-repo-url-https.png" alt="gitlab-repo-url-https">
+</div>
+</div>
+</li>
+<li>
+<p>Si por el contrario ha utilizado la URL <em>git</em> del repositorio, tendrá que intruducir unas credenciales tipo <em>SSH username con Private key</em>.</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/gitlab-repo-url-ssh.png" alt="gitlab-repo-url-ssh">
+</div>
+</div>
+<div class="paragraph">
+<p>Para evitar tener que introducir su clave privada personal en Jenkins, se debe <strong>crear una nueva pareja de claves ssh</strong> denominadas <em>de despliegue</em>, de manera que:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>al repositorio GitLab se le añade la clave pública <em>de despliegue</em>,</p>
+</li>
+<li>
+<p>y en Jenkins se añade la clave privada <em>de despliegue</em>.</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/jenkins-credential-ssh-deploy-key.png" alt="jenkins-credential-ssh-deploy-key">
+</div>
+</div>
+<div class="paragraph">
+<p>De esta forma, Jenkins usará la clave privada para acceder al repositorio <em>privado</em> en GitLab.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Seleccione la credencial añadida.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>En <em>Advanced settings</em>, introduzca:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Nombre del repositorio remoto, normalmente <em>origin</em> que identifica al repositorio remoto entre otros posibles remotos. En nuestro caso, lo hemos llamado <em>gitlab</em> ya que <em>origin</em> está usado por en el ejemplo para el remoto en <em>GitHub</em></p>
+</li>
+<li>
+<p>Refspec:</p>
+<div class="listingblock">
+<div class="content">
+<pre>_+refs/heads/*:refs/remotes/gitlab/* +refs/merge-requests/*/head:refs/remotes/gitlab/merge-requests/*_</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>El valor predeterminadode Refspec es</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash" data-lang="bash">sudo apt-get install apache2 –y
-sudo a2enmod proxy
-sudo a2enmod proxy_http</code></pre>
+<pre>_+refs/heads/*:refs/remotes/REPOSITORYNAME/*_</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>La salida esperada debe ser:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash" data-lang="bash">Enabling module proxy.
-To activate the new configuration, you need to run:
-  sudo service apache2 restart</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Comprobamos que Apache2 está funcionando en el puerto 80:</p>
+<p>observe que hemos usado <em>gitlab</em> en <em>REPOSITORYNAME</em>, aunque el valor habitual sería <em>origin</em></p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/Picture6.png" alt="Apache2 homepage">
+<img src="images/jenkins-git-gitlab-details.png" alt="jenkins-git-gitlab-details">
 </div>
 </div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>En la sección <em>Build Triggers</em>:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Seleccione <em>Build when a change is pushed to GitLab</em></p>
 <div class="paragraph">
-<p>A continuación, creamos un nuevo archivo de host virtual en la carpeta 'sites-available'</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>sudo nano /etc/apache2/sites-available/jenkins.conf</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Copiamos el siguiente texto como contenido del archivo, sustituyendo el texto <em>JENKINS.MACHINE.IP</em> por al IP de la máquina (ver ejemplo en la captura de pantalla abajo):</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-conf" data-lang="conf">&lt;Virtualhost *:80&gt;
-    ServerName        JENKINS.MACHINE.IP
-    ProxyRequests     Off
-    ProxyPreserveHost On
-    AllowEncodedSlashes NoDecode
-
-    &lt;Proxy http://localhost:8080/*&gt;
-      Order deny,allow
-      Allow from all
-    &lt;/Proxy&gt;
-
-    ProxyPass         /  http://localhost:8080/ nocanon
-    ProxyPassReverse  /  http://localhost:8080/
-    ProxyPassReverse  /  http://JENKINS.MACHINE.IP/
-&lt;/Virtualhost&gt;</code></pre>
-</div>
+<p>Copie la URL que se muestra en la misma línea como  <em>GitLab CI Service URL</em> porque la usará más tarde para definir el GitLab web hook.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/Picture7.png" alt="Archivo jenkins.conf">
+<img src="images/jenkins-gitlab-build-chen-a-change-is-pushed.png" alt="jenkins-gitlab-build-chen-a-change-is-pushed">
 </div>
 </div>
-<div class="paragraph">
-<p>Guardamos el archivo. Y activamos el host virtual de Jenkins con el comando <strong>a2ensite</strong></p>
+</li>
+</ul>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre>sudo a2ensite jenkins</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Reiniciamos Apache2 y Jenkins</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash" data-lang="bash">sudo systemctl restart apache2
-sudo systemctl restart jenkins</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Y por último, comprobamos que los puertos 80 y 8080 están usados por Apache2 y Jenkins, respectivameten</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>netstat -plntu</pre>
-</div>
-</div>
+</li>
+<li>
+<p>Añada un nuevo paso <em>post-build</em> seleccionando <em>Publish build status to GitLab commit (GitLab 8.1+ required)</em></p>
 <div class="imageblock">
 <div class="content">
-<img src="images/Picture8.png" alt="Listado de puertos activos 80 y 8080">
+<img src="images/jenkins-publish-build-status.png" alt="jenkins-publish-build-status">
 </div>
 </div>
-</div>
-</div>
-<h1 id="trueconfiguraci-n-de-jenkins-2" class="sect0"><a class="anchor" href="#trueconfiguraci-n-de-jenkins-2"></a>Configuración de Jenkins 2</h1>
-<div class="sect1">
-<h2 id="trueprimera-configuraci-n-de-jenkins"><a class="anchor" href="#trueprimera-configuraci-n-de-jenkins"></a>5. Primera configuración de Jenkins</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Antes de realizar la primera configuración necesitaremos saber el password temporal de admin que Jenkins ha generado para poder empezar a configurarlo:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>sudo cat /var/lib/jenkins/secrets/initialAdminPassword</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Copiamos el password y lo pegamos en la siguiente pantalla, y hacemo click en <b class="button">Continuar</b></p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/Picture9.png" alt="Unlock Jenkins">
-</div>
-</div>
-<div class="paragraph">
-<p>Seguidamente instalaremos los plugins más comunes. No os preocupéis que posteriormente instalaremos varios plugins más, de hecho una de las grandes ventajas que tiene Jenkins es la gran cantidad de plugins que hay.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/Picture10.png" alt="Install suggested plugins">
-</div>
-</div>
-<div class="paragraph">
-<p>Tras hacer clic en <strong>Install suggested plugins</strong>, el proceso de instalación de plugins tradará unos minutos:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/Picture11.png" alt="Jenkins plugins installations in progress">
-</div>
-</div>
-<div class="paragraph">
-<p>Seguidamente nos solicitará un usuario y una contraseña de <strong>admin</strong>, el cual usaremos posteriormente poder acceder a la administración de Jenkins:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/Picture12.png" alt="Create first Admin user">
-</div>
-</div>
-<div class="paragraph">
-<p>Pulsamos el botón <b class="button">Save and Finish</b></p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/Picture13.png" alt="Jenkins is ready">
-</div>
-</div>
-<div class="paragraph">
-<p>Ya podemos acceder a Jenkins introduciendo el usuario y contraseña que acabamos de crear.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/Picture14.png" alt="Bienvenido a Jenkins">
-</div>
+</li>
+<li>
+<p>Guarde los cambios!</p>
+</li>
+</ol>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="truesecurizando-jenkins"><a class="anchor" href="#truesecurizando-jenkins"></a>6. Securizando Jenkins</h2>
+<h2 id="trueconfiguraci-n-del-repositorio-gitlab"><a class="anchor" href="#trueconfiguraci-n-del-repositorio-gitlab"></a>4. Configuración del repositorio GitLab</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Las versiones anteriores de Jenkins (v1.x) se instalaban sin ningún tipo de control de acceso para los usuarios. Esto implicaba que cualquier usuario podía usar la aplicación, lo que era totalmente desaconsejable. Por ello, lo primero era activar la seguridad. La versión actual (v2.x) crea un usuario Admin con el que hemos hecho el primer acceso, pero, en cualquier caso, sigue siendo necesario configurar la seguridad para poder gestionar el acceso a nuevos usuarios. Para ello, hacemos clic en <strong>Administrar Jenkins</strong> / <strong>Configuración global de seguridad</strong>.</p>
+<p>En GitLab vaya a su repositorio y haga clic en  <em>Settings</em></p>
 </div>
 <div class="paragraph">
-<p>Jenkins permite diversos <strong>modos de acceso</strong>. Vamos a configurar el más básico que es el de <strong>Usar base de datos de Jenkins</strong>, y marcamos <strong>Permitir que los usuarios se registren</strong>. A continuación, en la sección <strong>Autorización</strong>, marcamos <strong>Configuración de seguridad</strong>. En el campo de texto debemos escribir el nombre del usuario admin con el que hemos accedido, y a continuación hacer clic en el botón <b class="button">Añadir</b>. Tras ello, debemos marcarlo como <strong>Administer</strong>. Y por último <b class="button">Guardar</b></p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/Picture16.png" alt="Autorización. Configuración de seguirdad">
-</div>
-</div>
-<div class="admonitionblock warning">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
-</td>
-<td class="content">
-<div class="title">Qué hacer si nos hemos bloqueado y no podemos acceder</div>
-<div class="paragraph">
-<p>En caso de emergencia, si olvidamos la contraseña o no podemos acceder a Jenkins, debemos seguir las instrucciones definidas aquí: <a href="https://wiki.jenkins-ci.org/display/JENKINS/Disable+security">Help! I locked myself out!</a>.</p>
-</div>
-<div class="paragraph">
-<p>Más info en <a href="https://wiki.jenkins-ci.org/display/JENKINS/Securing+Jenkins">Securing Jenkins</a></p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>Podemos registar nuevos usuarios mediante el formulario de registro de la página inicial (no estando logueados). Cada miembro del equipo debe registrarse como usuario. Mediante el usuario adminsitrador damos permisos a los nuevos usuarios registrados.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="title">Control de acceso con LDAP</div>
-<div class="paragraph">
-<p>El método de acceso más recomendable sería tener un sistema LDAP para el equipo, y que la validación de todas las herramientas (GitLab, Jenkins, etc) se realizase contra el LDAP (esto se podría implementar con, por ejemplo, <a href="https://www.openldap.org/">OpenLDAP</a>).</p>
-</div>
-<div class="paragraph">
-<p>Más info:</p>
+<p>Haga clic en  <em>Web Hooks</em></p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="https://wiki.jenkins-ci.org/display/JENKINS/Standard+Security+Setup">Jenkins standard security setup</a></p>
-</li>
-<li>
-<p><a href="https://wiki.jenkins-ci.org/display/JENKINS/LDAP+Plugin">LDAP plugin</a></p>
+<p>En URL introduzca la URL que ha copiado anteriormente en Jenkins asociada al <em>GitLab CI Service URL</em>, que es de la forma</p>
 </li>
 </ul>
-</div>
-</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="trueprobando-un-primer-proyecto"><a class="anchor" href="#trueprobando-un-primer-proyecto"></a>7. Probando un primer proyecto</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Desde la página inicial de Jenkins, clic en <strong>Nueva Tarea</strong> (<em>Create new Job</em>)</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/Nueva_Tarea.png" alt="Nueva Tarea">
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Nombre: <strong>prueba de sistema</strong></p>
-</li>
-<li>
-<p>Seleccionar: <strong>Crear un proyecto estilo libre</strong></p>
-</li>
-<li>
-<p><b class="button">Ok</b></p>
-</li>
-</ul>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/Picture17.png" alt="Selección tipo de Tarea">
-</div>
-</div>
-<div class="paragraph">
-<p>Entramos en la configuración del nuevo proyecto. Seleccionamos la pestaña <strong>Ejecutar</strong></p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Seleccionamos el botón <strong>Añadir un nuevo paso</strong></p>
-</li>
-<li>
-<p>Seleccionamos <strong>Ejecutar línea de comandos (shell)</strong></p>
-</li>
-<li>
-<p>En comando escribimos</p>
-<div class="listingblock">
-<div class="content">
-<pre>top -b -n 1 | head -n 5</pre>
-</div>
-</div>
-</li>
-<li>
-<p>Pulsamos <strong>Guardar</strong></p>
-</li>
-</ul>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/Picture19.png" alt="Configuracion proyecto basico">
-</div>
-</div>
-<div class="paragraph">
-<p>Tras ello hacemos clic en <strong>Construir ahora</strong> (<em>Build now</em>)</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/menu_build_now.png" alt="Construir ahora">
-</div>
-</div>
-<div class="paragraph">
-<p>Tras la ejecución del proyecto, se puede ver el <strong>Historial de tareas</strong>, hacemos clic en la bolita azul de la primera ejecución y nos mostrará la <strong>Salida de Consola</strong>. Ahí podemos ver el resultado de la ejecución de este proyecto de prueba en Jenkins.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/Picture20.png" alt="Bolita azul para ver la Salida consola">
-</div>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/Picture21.png" alt="Salida consola del primer ejemplo">
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="trueconfiguraci-n-de-herramientas"><a class="anchor" href="#trueconfiguraci-n-de-herramientas"></a>8. Configuración de herramientas</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Jenkins hace uso de diversas herramientas a las que invoca a la hora de realizar tareas en la construcción de los proyectos. Estas herramientas deben ser instaladas y configuradas. Para ello vamos a <strong>Admininstrar Jenkins</strong> / <strong>Global Tools configuration</strong></p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/Picture22.png" alt="Global Tools Configuration">
-</div>
-</div>
-<div class="sect2">
-<h3 id="truejdk"><a class="anchor" href="#truejdk"></a>8.1. JDK</h3>
-<div class="ulist">
-<ul>
-<li>
-<p><b class="button">Añadir JDK</b></p>
-</li>
-<li>
-<p>Nombre: <strong>OpenJDK-8</strong></p>
-</li>
-<li>
-<p>JAVA_HOME: <strong>/usr/lib/jvm/java-8-openjdk-amd64/</strong></p>
-<div class="imageblock">
-<div class="content">
-<img src="images/Picture23.png" alt="Instalación de JDK">
-</div>
-</div>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="truegit"><a class="anchor" href="#truegit"></a>8.2. Git</h3>
-<div class="ulist">
-<ul>
-<li>
-<p><b class="button">Añadir Git</b></p>
-</li>
-<li>
-<p>Nombre: <strong>Default</strong></p>
-</li>
-<li>
-<p>Path: <strong>git</strong></p>
-</li>
-</ul>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>Suponemos que git ya está instalado previamente en la máquina. En caso contrario instalarlo desde el terminal</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>sudo apt-get install git</pre>
-</div>
-</div>
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect2">
-<h3 id="trueant"><a class="anchor" href="#trueant"></a>8.3. Ant</h3>
-<div class="ulist">
-<ul>
-<li>
-<p><b class="button">Instalaciones de Ant&#8230;&#8203;</b> / <b class="button">Añadir Ant</b></p>
-</li>
-<li>
-<p>Nombre: <strong>ant 1.10.1</strong></p>
-</li>
-<li>
-<p>Marcar <strong>Instalar automáticamente</strong></p>
-</li>
-<li>
-<p>Version: <strong>1.10.1</strong></p>
-</li>
-</ul>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/Picture24.png" alt="Instalación de Ant">
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="truemaven"><a class="anchor" href="#truemaven"></a>8.4. Maven</h3>
-<div class="ulist">
-<ul>
-<li>
-<p><b class="button">Instalaciones de Maven&#8230;&#8203;</b> / <b class="button">Añadir Maven</b></p>
-</li>
-<li>
-<p>Nombre: <strong>maven 3.3.3</strong></p>
-</li>
-<li>
-<p>Marcar <strong>Instalar automáticamente</strong></p>
-</li>
-<li>
-<p>Version: <strong>3.3.3</strong></p>
-</li>
-</ul>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/Picture25.png" alt="Instalación de Maven">
-</div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>Seleccionamos la versión <strong>3.3.3</strong> de Maven. (La 3.5.0 da muchos problemas!)</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="admonitionblock warning">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>En caso de que no esté disponible la configuración de instalaciones de Maven, este paso deberá hacerse una vez realizada la instalación del plugin de Maven.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="trueinstalaci-n-de-plugins"><a class="anchor" href="#trueinstalaci-n-de-plugins"></a>9. Instalación de plugins</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>La gestión de los plugins se realiza desde <strong>Administrar Jenkins</strong> / <strong>Administrar plugins</strong>.</p>
-</div>
-<div class="paragraph">
-<p>En la pestaña <strong>Actualizaciones disponibles</strong> (<em>Update</em>) debemos marcar todos los que se muestren y manternelos actualizados.</p>
-</div>
-<div class="paragraph">
-<p>La pestaña <strong>Todos los plugins</strong> (<em>Available</em>) muestra la lista de todos los plugins que no tenemos instalados. De ella tenemos que seleccionar los siguientes:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Maven integration plugin</p>
-<div class="imageblock">
-<div class="content">
-<img src="images/Picture26.png" alt="Maven plugin">
-</div>
-</div>
-</li>
-<li>
-<p>Cobertura plugin</p>
-<div class="imageblock">
-<div class="content">
-<img src="images/Picture27.png" alt="Cobertura plugin">
-</div>
-</div>
-</li>
-<li>
-<p>JaCoCo (Java Code Coverage)</p>
-<div class="imageblock">
-<div class="content">
-<img src="images/Picture28.png" alt="JaCoCo plugin">
-</div>
-</div>
-</li>
-<li>
-<p>GitLab</p>
-<div class="imageblock">
-<div class="content">
-<img src="images/Picture29.png" alt="GitLab plugin">
-</div>
-</div>
-</li>
-<li>
-<p>Sonar</p>
-<div class="imageblock">
-<div class="content">
-<img src="images/Picture32.png" alt="Sonar plugin">
-</div>
-</div>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Tras ello, hacemos clic en <strong>Descargar ahora e instalar despues de reiniciar</strong>. Y marcamos <strong>Reiniciar Jenkins después de la instalación</strong></p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/Picture30.png" alt="Descargar plugins">
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="trueconfiguraci-n-adicional-opcional"><a class="anchor" href="#trueconfiguraci-n-adicional-opcional"></a>10. Configuración Adicional (opcional)</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Opcionalmente, puede ser necesario realizar alguna configuración adicional. Por ejemplo si queremos construir aplicaciones PHP con Phing debemos instalar el plugin de Phing en Jenkins, así como instalar Phing en la máquina.</p>
-</div>
-<div class="paragraph">
-<p>Recuerda que hay infinidad de plugins en Jenkins, y si quieres usar alguno de ellos solo tienes que instalarlo. Existe numerosa documentación de Jenkins en la web.</p>
-</div>
-<div class="paragraph">
-<p>En caso de duda -&#8594; <em>Stackoverflow</em> ;-)</p>
-</div>
-<div class="sect2">
-<h3 id="trueconfiguraci-n-de-gitlab"><a class="anchor" href="#trueconfiguraci-n-de-gitlab"></a>10.1. Configuración de GitLab</h3>
-<div class="paragraph">
-<p>Si queréis usar vuestro propio GitLab con Jenkins, tendreis que hacer una configuración de GitLab indicando la URL y el API Token. El API Token es un valor ligado al usuario de GitLab disponible en <strong>User Settings</strong> / <strong>Account</strong>:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/gitlab-token.png" alt="GitLab token">
-</div>
-</div>
-<div class="paragraph">
-<p>A continuación, en Jenkins, introducimos la configuración del servidor Gitlab: <strong>Administrar Jenkins</strong> / <strong>Configurar sistema</strong>. Al  final de la página encontrarás la sección de GitLab.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/Picture31.png" alt="Giltal Configuration">
+<pre>http://JENKINS_URL/project/JENKINS_PROJECT_NAME</pre>
 </div>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Nombre de la conexión: <em>mi gitlab</em></p>
+<p>Selecione <em>Merge Request Events</em> y <em>Push Events</em></p>
 </li>
 <li>
-<p>Gitlab Host URL: http://<em>mi_IP_gitlab</em></p>
+<p>Clic en <em>Add Webhook</em></p>
 </li>
 <li>
-<p>Credenciales: <strong>Añadir</strong></p>
+<p>Clic en <em>Test Hook</em> para probar el nuevo web hook. Verá dos resultados:</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Tipo: <strong>GitLab API token</strong></p>
-</li>
-<li>
-<p>API token: <em>mi token</em></p>
-</li>
-<li>
-<p>ID: <em>mi-gitlab</em></p>
-</li>
-<li>
-<p>Descripción: <em>token de mi gitlab</em></p>
-<div class="imageblock">
-<div class="content">
-<img src="images/gitlab-api-token-credential.png" alt="Credencial GitLab API token">
-</div>
-</div>
-<div class="paragraph">
-<p>Tras ello seleccionamos la credencial:</p>
-</div>
+<p>GitLab mostrará  <em>Hook successfully executed</em></p>
 </li>
 </ul>
 </div>
@@ -1300,146 +714,60 @@ sudo systemctl restart jenkins</code></pre>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/gitlab-api-token-ok.png" alt="Credencial GitLab API token">
-</div>
-</div>
-<div class="paragraph">
-<p>En un proximo tutorial veremos como usar un repositorio GitLab en un proyecto Jenkins.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="trueconfiguraci-n-de-sonar"><a class="anchor" href="#trueconfiguraci-n-de-sonar"></a>10.2. Configuración de Sonar</h3>
-<div class="paragraph">
-<p>Sonar es una plataforma para evaluar código fuente. Sonar, que es software libre usa diversas herramientas de análisis estático de código fuente como Checkstyle, PMD o FindBugs para obtener métricas que pueden ayudar a mejorar la calidad del código de un programa.</p>
-</div>
-<div class="paragraph">
-<p>Primero hemos de instalar el plugin de Sonar y luego configurarlo.
-* Instalación del plugin <strong>SonarQube Scanner for Jenkins</strong></p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/Picture32.png" alt="SonarQube plugin">
-</div>
-</div>
-<div class="paragraph">
-<p>A continuación, <strong>Administrar Jenkins</strong> / <strong>Global Tool Configuration</strong>.
-Descender en la página a la sección de configuración <strong>SonarQube Scanner</strong>, y:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Hacer clic <strong>Añadir SonarQube Scanner</strong></p>
-</li>
-<li>
-<p>Seleccionar <strong>Instalar Automáticamente</strong></p>
-</li>
-<li>
-<p>Nombre: <strong>SonarQube scanner 3.x.x</strong></p>
-</li>
-<li>
-<p>Version: <em>la última disponible</em></p>
-</li>
-</ul>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/Picture33.png" alt="Configuracion de SonarQube scanner tool">
-</div>
-</div>
-<div class="paragraph">
-<p>Por último guardar la configuración.</p>
-</div>
-<div class="paragraph">
-<p>Más info: <a href="https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner+for+Jenkins">SonarQube Scanner for Jenkins</a></p>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="trueactualizaci-n"><a class="anchor" href="#trueactualizaci-n"></a>11. Actualización</h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="trueactualizaci-n-de-jenkins"><a class="anchor" href="#trueactualizaci-n-de-jenkins"></a>11.1. Actualización de Jenkins</h3>
-<div class="paragraph">
-<p>Si al iniciar Jenkins como administradores nos aparece un mensaje indicando que una nueva versión de Jenkins está disponible, es aconsejable actualizar.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/new-version.png" alt="Disponible nueva version de Jenkins">
-</div>
-</div>
-<div class="paragraph">
-<p>Para ello:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Administrar Jenkins / Prepare for Shutdown</p>
-</li>
-</ul>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/prepare-for-shutdown.png" alt="Prepare for shutdown...">
+<img src="images/gitlab-webhook-test-success.png" alt="gitlab-webhook-test-success">
 </div>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Desde la consola ssh:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash" data-lang="bash">sudo apt-get update -y
-sudo apt-get upgrade -y</code></pre>
-</div>
-</div>
+<p>El proyecto Jenkins comenzará a ejecutarse</p>
 </li>
 </ul>
 </div>
-</div>
-<div class="sect2">
-<h3 id="trueactualizaci-n-de-plugins"><a class="anchor" href="#trueactualizaci-n-de-plugins"></a>11.2. Actualización de plugins</h3>
-<div class="paragraph">
-<p>El enlace para gestionar los plugins nos muestra si hay actualizaciones disponibles</p>
-</div>
 <div class="imageblock">
 <div class="content">
-<img src="images/manage-plugins-update.png" alt="Actualizaciones de plugins disponibles">
+<img src="images/jenkins-build-from-gitlab.png" alt="jenkins-build-from-gitlab">
 </div>
 </div>
 <div class="paragraph">
-<p>Entramos y marcamos todos con <em>All</em> , y hacemos clic en <em>Descargar ahora e instalar después de reiniciar</em></p>
+<p>La conexión ya está hecha!</p>
+</div>
+<div class="paragraph">
+<p>Pruebe a realizar cambios en los archivos del repositorio, guardarlos y hacer push en GitLab. Tras la construcción en Jenkins, verá que en el repositorio GitLab aparece un nuevo icono con el resutlado del build:</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/plugins-update-all.png" alt="Actualizar todos los plugins">
+<img src="images/gitlab-build-passed-icon.png" alt="gitlab-build-passed-icon">
 </div>
 </div>
 <div class="paragraph">
-<p>Tras ello, marcamos <em>Reiniciar Jenkins&#8230;&#8203;</em></p>
+<p>Si hace clic sobre él, verá la página del commit asociado al build.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/plugins-restart.png" alt="Reiniciar Jenkins...">
+<img src="images/gitlab-commit-build-passed-icon.png" alt="gitlab-commit-build-passed-icon">
 </div>
+</div>
+<div class="paragraph">
+<p>Y en la lista de commits, a partir de ahora aparecerá un nuevo icono con el estado del build asociado a cada commit.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/gitlab-commit-list-build-passed-icon.png" alt="gitlab-commit-list-build-passed-icon">
 </div>
 </div>
 </div>
 </div>
 <h1 id="truebibliograf-a" class="sect0"><a class="anchor" href="#truebibliograf-a"></a>Bibliografía</h1>
-<div class="sect1">
-<h2 id="truereferencias"><a class="anchor" href="#truereferencias"></a>Referencias</h2>
-<div class="sectionbody">
+<div class="openblock partintro">
+<div class="content">
 <div class="ulist">
 <ul>
 <li>
-<p>Jenkins 2 – Instalación de Jenkins en Ubuntu. Disponible en: <a href="https://www.jorgedelacruz.es/2017/02/14/jenkins-2-instalacion-de-jenkins-en-ubuntu/" class="bare">https://www.jorgedelacruz.es/2017/02/14/jenkins-2-instalacion-de-jenkins-en-ubuntu/</a></p>
+<p><a href="https://docs.gitlab.com/ee/integration/jenkins.html#jenkins-ci-integration" class="bare">https://docs.gitlab.com/ee/integration/jenkins.html#jenkins-ci-integration</a></p>
 </li>
 <li>
-<p><a href="https://www.howtoforge.com/tutorial/how-to-install-jenkins-with-apache-on-ubuntu-16-04/" class="bare">https://www.howtoforge.com/tutorial/how-to-install-jenkins-with-apache-on-ubuntu-16-04/</a></p>
-</li>
-<li>
-<p><a href="https://pkg.jenkins.io/debian-stable/" class="bare">https://pkg.jenkins.io/debian-stable/</a></p>
+<p><a href="https://github.com/jenkinsci/gitlab-plugin#gitlab-configuration" class="bare">https://github.com/jenkinsci/gitlab-plugin#gitlab-configuration</a></p>
 </li>
 </ul>
 </div>
@@ -1449,7 +777,7 @@ sudo apt-get upgrade -y</code></pre>
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2017-05-02 15:20:25 H
+Last updated 2017-05-03 16:21:03 H
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/github.min.css">
