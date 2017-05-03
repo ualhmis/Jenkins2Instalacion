@@ -163,7 +163,7 @@ image::images/jenkins-build-from-gitlab.png[jenkins-build-from-gitlab]
 
 La conexión ya está hecha!
 
-Pruebe a realizar cambios en los archivos del repositorio, guardarlos y hacer push en GitLab. Tras la construcción en Jenkins, verá que en el repositorio GitLab aparece un nuevo icono con el resutlado del build:
+Pruebe a realizar cambios en los archivos del repositorio, guardarlos y hacer push en GitLab. Tras la construcción en Jenkins, verá que en el repositorio GitLab aparece un nuevo icono con el resultado del build:
 
 image::images/gitlab-build-passed-icon.png[gitlab-build-passed-icon]
 
