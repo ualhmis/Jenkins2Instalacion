@@ -172,6 +172,12 @@ To activate the new configuration, you need to run:
   sudo service apache2 restart
 ----
 
+Reiniciamos Apache2:
+[source,bash]
+----
+sudo service apache2 restart
+----
+
 Comprobamos que Apache2 está funcionando en el puerto 80:
 
 image::images/Picture6.png[Apache2 homepage]
