@@ -1,5 +1,8 @@
 # Instalación de Jenkins 2 en Ubuntu 16.04 LTS
 
+[![GitHub issues](https://img.shields.io/github/issues/ualhmis/Jenkins2Instalacion.svg)]()
+
+
 Herramientas y Métodos de Ingeniería del Software
 
 Version 1.1, mayo-2017
