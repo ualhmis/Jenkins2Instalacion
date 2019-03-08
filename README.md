@@ -1,11 +1,12 @@
-# Instalación de Jenkins 2 en Ubuntu 16.04 LTS
+# Instalaciï¿½n de Jenkins 2 en Ubuntu 16.04 LTS y 18.04 LTS
 
 [![GitHub issues](https://img.shields.io/github/issues/ualhmis/Jenkins2Instalacion.svg)](https://github.com/ualhmis/Jenkins2Instalacion/issues)
 
 
-Herramientas y Métodos de Ingeniería del Software
+Herramientas y Mï¿½todos de Ingenierï¿½a del Software
 
 Version 1.1, mayo-2017
 
-## [Instalación de Jenkins](jenkins2.adoc)
-## [Lanzar la construcción de un proyecto en Jenkins al hacer push sobre repositorios privados en GitLab](gitlab-push-jenkins.adoc)
+## [Instalaciï¿½n de Jenkins](jenkins2.adoc)
+## [Instalaciï¿½n de Jenkins Ubuntu 18.04](jenkins2_2019.adoc)
+## [Lanzar la construcciï¿½n de un proyecto en Jenkins al hacer push sobre repositorios privados en GitLab](gitlab-push-jenkins.adoc)
