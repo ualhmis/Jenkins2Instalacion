@@ -46,6 +46,10 @@ COLOCA A CONTINUACION LOS OBJETIVOS
 :numbered:
 
 # Prerequisitos
+
+## Creación de una máquina virtual para Jenkins
+Debes disponer de una máquina virtual en la nube para la instalación de Jenkins. Sigue los pasos que conoces para crear una máquina virtual. 
+
 ## Actualizacion del sistema
 ### Mensaje de reinicio
 
@@ -59,23 +63,7 @@ image::images/Picture1.png[Reiniciar el sistema]
 Tras ello, actualizar los paquetes 
 [listing]
 sudo apt-get update -y
-
-### Actualización del nombre del host
-Es posible que cuando ejecutemos una instrucción con *sudo* nos aparezca un mensaje de error
-
-[source,bash]
-Unable to resolve host...
-
-En ese caso, debemos actualizar el archivo /etc/hosts con el nombre del host. Para ello, ejecutamos
-[listing]
-more /etc/hostname
-
-Esto mostrará el nombre del host. A continuación editamos el documento /etc/hosts y añadimos el nombre del host en la segunda linea junto a 127.0.0.1
-
-[listing]
-sudo nano /etc/hosts
-
-image::images/Picture2.png[Actualización del nombre del host en /etc/hosts]
+sudo apt-get upgrade -y
 
 ## Instalar Java
 
@@ -126,11 +114,11 @@ image::images/Picture3.png[JAVA_HOME]
 
 ## Instalación de Jenkins mediante paquetes
 
-Instalaremos Jenkins en un sistema operativo basado en Ubuntu 16.04 LTS. La instalación consiste en añadir los repositorios de Jenkins, actualizar nuestro sistema de repositorios y una vez acabado, instalar Jenkins.
+Instalaremos Jenkins en un sistema operativo basado en Ubuntu 18.04 LTS. La instalación consiste en añadir los repositorios de Jenkins, actualizar nuestro sistema de repositorios y una vez acabado, instalar Jenkins.
 
 IMPORTANT: Como prerequsito es necesario tener instalado Java. Compruebe que está configurado JAVA_HOME
 
-Instalaremos Jenkins de la rama Stable (versión LTS). Hay que tener en cuenta que esta versión de Jenkins se actualiza cada 12 semanas. Si queréis más información sobre la versión LTS de Jenkins, os dejo el enlace donde lo explica: https://wiki.jenkins-ci.org/display/JENKINS/LTS+Release+Line
+Instalaremos Jenkins de la rama estable (versión LTS). Hay que tener en cuenta que esta versión de Jenkins se actualiza cada 12 semanas. Si queréis más información sobre la versión LTS de Jenkins, os dejo el enlace donde lo explica: https://wiki.jenkins-ci.org/display/JENKINS/LTS+Release+Line
 
 Lo primero que haremos es añadir los repositorios de Jenkins e instalarlo mediante apt-get:
 
@@ -373,15 +361,15 @@ image::images/Picture24.png[Instalación de Ant]
 
 ### Maven
 * btn:[Instalaciones de Maven...] / btn:[Añadir Maven] 
-* Nombre: *maven 3.3.3*
+* Nombre: *maven default*
 * Marcar *Instalar automáticamente*
-* Version: *3.3.3*
+* Version: *la última versión disponible*
 
 image::images/Picture25.png[Instalación de Maven]
 
 [NOTE]
 ====
-Seleccionamos la versión *3.3.3* de Maven. (La 3.5.0 da muchos problemas!)
+Seleccionamos la ultima versión de Maven disponible en el desplegable. (La 3.5.0 da muchos problemas!)
 ====
 
 [WARNING]
@@ -412,7 +400,7 @@ image::images/Picture28.png[JaCoCo plugin]
 +
 image::images/Picture29.png[GitLab plugin]
 
-* Sonar
+* SonarQube
 +
 image::images/Picture32.png[Sonar plugin]
 
@@ -458,9 +446,9 @@ image::images/gitlab-api-token-ok.png[Credencial GitLab API token]
 
 En un proximo tutorial veremos como usar un repositorio GitLab en un proyecto Jenkins.
 
-### Configuración de Sonar
+### Configuración de SonarQube
 
-Sonar es una plataforma para evaluar código fuente. Sonar, que es software libre usa diversas herramientas de análisis estático de código fuente como Checkstyle, PMD o FindBugs para obtener métricas que pueden ayudar a mejorar la calidad del código de un programa.
+SonarQube es una plataforma de calidad de código fuente. SonarQube proporciona diversas herramientas de análisis estático de código fuente como Checkstyle, PMD o FindBugs para obtener métricas que pueden ayudar a mejorar la calidad del código de un programa.
 
 Primero hemos de instalar el plugin de Sonar y luego configurarlo.
 * Instalación del plugin *SonarQube Scanner for Jenkins*
@@ -476,6 +464,8 @@ Descender en la página a la sección de configuración *SonarQube Scanner*, y:
 * Version: _la última disponible_
 
 image::images/Picture33.png[Configuracion de SonarQube scanner tool]
+
+Se debe crear un token de autenticación desde el servidor SonarQube, creado como una credencial 'Secret Text'. Si aun no dispone de un servidor SonarQube, déjelo en blanco.
 
 Por último guardar la configuración.
 
