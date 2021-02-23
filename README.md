@@ -7,6 +7,6 @@ Herramientas y Métodos de Ingeniería del Software
 
 Version 1.4, Febrero-2021
 
-## [Instalación de Jenkins Ubuntu 18.04](jenkins2_2019.adoc)
-## [Instalación de Jenkins Ubuntu 16.04](jenkins2.adoc)
-## [Lanzar la construcción de un proyecto en Jenkins al hacer push sobre repositorios privados en GitLab](gitlab-push-jenkins.adoc)
+## [Instalación de Jenkins Ubuntu 18.04](docs/jenkins2_2019.adoc)
+## [Instalación de Jenkins Ubuntu 16.04](docs/jenkins2.adoc)
+## [Lanzar la construcción de un proyecto en Jenkins al hacer push sobre repositorios privados en GitLab](docs/gitlab-push-jenkins.adoc)
