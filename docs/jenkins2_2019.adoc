@@ -18,7 +18,7 @@ Nombre y título del trabajo
 ////
 = Instalación de Jenkins 2 en Ubuntu 18.04 LTS
 Heramientas y Métodos de Ingeniería del Software
-Version 1.0, Marzo-2019
+Version 1.4, Febrero-2021
 Joaquín Cañadas <jjcanada@ual.es>
 Manel Mena <manel.mena@ual.es>
 
