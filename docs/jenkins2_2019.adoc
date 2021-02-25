@@ -155,7 +155,7 @@ Necesitamos instalar un apache o nginx en modo *Reverse Proxy* para poder accede
 Instalamos Apache2 y lo configuramos para que actue como proxy inverso del puerto 8080.
 [source,bash]
 ----
-sudo apt-get install apache2 -y
+sudo apt-get install apache2
 sudo a2enmod proxy
 sudo a2enmod proxy_http
 ----
