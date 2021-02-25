@@ -678,10 +678,11 @@ Como prerequsito es necesario tener instalado Java. Compruebe que está configur
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">wget -q -O - https://pkg.jenkins.io/debian/jenkins-ci.org.key | sudo apt-key add -
-sudo sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ &gt; /etc/apt/sources.list.d/jenkins.list'
-sudo apt-get update
-sudo apt-get install -y jenkins</code></pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
+sudo sh -c 'echo deb https://pkg.jenkins.io/debian-stable binary/ &gt; \
+    /etc/apt/sources.list.d/jenkins.list'
+sudo apt-get update -y
+sudo apt-get install jenkins -y</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1469,7 +1470,7 @@ sudo apt-get upgrade -y</code></pre>
 <div id="footer">
 <div id="footer-text">
 Version 1.4<br>
-Last updated 2021-02-23 21:54:21 +0100
+Last updated 2021-02-25 13:55:56 +0100
 </div>
 </div>
 </body>
