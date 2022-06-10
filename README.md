@@ -1,4 +1,4 @@
-# Instalación de Jenkins 2 en Ubuntu 16.04 LTS y 18.04 LTS
+# Instalación de Jenkins 2 en Ubuntu 18.04 LTS y 20.04 LTS
 
 [![GitHub issues](https://img.shields.io/github/issues/ualhmis/Jenkins2Instalacion.svg)](https://github.com/ualhmis/Jenkins2Instalacion/issues)
 
