@@ -53,37 +53,43 @@ Debes disponer de una máquina virtual en la nube para la instalación de Jenkin
 ## Actualizacion del sistema
 ### Mensaje de reinicio
 
-Si aparece el mensaje *** System restart required ***
+Si aparece el mensaje `++***++ System restart required ++***++`
 ejecutar
-[listing]
+[source,bash]
+----
 sudo reboot -h now
+----
 
 image::images/Picture1.png[Reiniciar el sistema]
 
 Tras ello, actualizar los paquetes 
-[listing]
+[source,bash]
+----
 sudo apt-get update -y
 sudo apt-get upgrade -y
+----
 
 ## Instalar Java
 
-Puede instalar el JDK con el siguiente comando, es importante instalar la versión 1.8 del JDK, si no Jenkins no funcionará. 
+Puede instalar el JDK con el siguiente comando, es importante instalar al menos la versión 1.8 del JDK, si no Jenkins no funcionará. Aunque ya recomienda usar https://www.jenkins.io/doc/administration/requirements/upgrade-java-guidelines/[Java 11,window=_blank]
 
 [listing]
-sudo apt install openjdk-8-jdk
+sudo apt install openjdk-11-jdk -y
 
-Primero comprobaremos si la versión activa de Java es la 1.8.
+Primero comprobaremos si la versión activa de Java es la 11.
 
 [listing]
 java -version
 
-image::images/java-version.png[java -version]
+image::images/java-version-11.png[java -version]
 
 En caso contrario podemos comprobar si hay varias instalaciones de Java en el servidor y elegir la pertinente:
 [listing]
-sudo update-alternatives --config java -l
+sudo update-alternatives --config java
 
-### Definiendo la Variable de Entorno JAVA_HOME
+image::images/java-alternatives-11.png[java -alternartives]
+
+### Definiendo la Variable de Entorno `JAVA_HOME`
 
 [listing]
 sudo nano /etc/environment
@@ -91,7 +97,7 @@ sudo nano /etc/environment
 Al final de este archivo, agregue la siguiente línea, asegurándose de sustituir la ruta resaltada con la  ruta de jdk en su sistema.
 
 [source,bash]
-JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64/jre"
+JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64"
 
 
 Guarde, salga del archivo y vuelva a cargarlo.
@@ -107,27 +113,30 @@ echo $JAVA_HOME
 
 Esto devolverá la ruta que acaba de establecer.
 
-image::images/Picture3.png[JAVA_HOME]
-
+[listing]
+/usr/lib/jvm/java-11-openjdk-amd64
 
 # Instalación de Jenkins 2
 
 ## Instalación de Jenkins mediante paquetes
 
-Instalaremos Jenkins en un sistema operativo basado en Ubuntu 18.04 LTS. La instalación consiste en añadir los repositorios de Jenkins, actualizar nuestro sistema de repositorios y una vez acabado, instalar Jenkins.
+Instalaremos Jenkins en un sistema operativo basado en Ubuntu 18.04 LTS o 20.04 LTS. La instalación consiste en añadir los repositorios de Jenkins, actualizar nuestro sistema de repositorios y una vez acabado, instalar Jenkins.
 
 IMPORTANT: Como prerequsito es necesario tener instalado Java. Compruebe que está configurado JAVA_HOME
 
-Instalaremos Jenkins de la rama estable (versión LTS). Hay que tener en cuenta que esta versión de Jenkins se actualiza cada 12 semanas. Si queréis más información sobre la versión LTS de Jenkins, os dejo el enlace donde lo explica: https://wiki.jenkins-ci.org/display/JENKINS/LTS+Release+Line
+Instalaremos Jenkins de la rama estable (versión Long-Term Support, LTS). Hay que tener en cuenta que esta versión de Jenkins se actualiza cada 12 semanas. Si queréis más información sobre la versión LTS de Jenkins, os dejo el enlace https://www.jenkins.io/download/lts/[aqui].
 
 Lo primero que haremos es añadir los repositorios de Jenkins e instalarlo mediante apt-get:
 
 [source,bash]
 ----
 wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
+
 sudo sh -c 'echo deb https://pkg.jenkins.io/debian-stable binary/ > \
     /etc/apt/sources.list.d/jenkins.list'
+
 sudo apt-get update -y
+
 sudo apt-get install jenkins -y
 ----
 
@@ -135,7 +144,14 @@ A continuación, levantamos el servicio:
 [listing]
 sudo systemctl start jenkins	
 
-Y comprobamos que Jenkins está funcionando en el puerto 8080
+Debido a que `systemctl` no muestra un resultado de estado, utilizaremos el comando `status` para verificar que Jenkins se haya iniciado de forma correcta:
+
+[listing]
+sudo systemctl status  jenkins	
+
+Si todo salió bien, la primera parte del resultado de estado mostrará que el servicio está *activo*.
+
+Y comprobamos también que Jenkins está funcionando en el puerto 8080
 [listing]
 netstat -plntu
 
@@ -189,7 +205,7 @@ Copiamos el siguiente texto como contenido del archivo, sustituyendo el texto _J
 [source,conf]
 ----
 <Virtualhost *:80>
-    ServerName        JENKINS.MACHINE.IP
+    ServerName        JENKINS.MACHINE.IP <1>
     ProxyRequests     Off
     ProxyPreserveHost On
     AllowEncodedSlashes NoDecode
@@ -201,9 +217,11 @@ Copiamos el siguiente texto como contenido del archivo, sustituyendo el texto _J
  
     ProxyPass         /  http://localhost:8080/ nocanon
     ProxyPassReverse  /  http://localhost:8080/
-    ProxyPassReverse  /  http://JENKINS.MACHINE.IP/
+    ProxyPassReverse  /  http://JENKINS.MACHINE.IP/ <2>
 </Virtualhost>
 ----
+<1> Rercuerda sustituir `JENKINS.MACHINE.IP` por el DNS de la máquina virtual en Azure donde has instalado Jenkins.
+<2> Rercuerda sustituir `JENKINS.MACHINE.IP` por el DNS de la máquina virtual 
 
 image::images/Picture7b.png[Archivo jenkins.conf]
 
@@ -335,7 +353,7 @@ image::images/Picture22.png[Global Tools Configuration]
 
 ### JDK
 * btn:[Añadir JDK] 
-* Nombre: *OpenJDK-8* 
+* Nombre: *OpenJDK-11* 
 * JAVA_HOME: */usr/lib/jvm/java-8-openjdk-amd64/*
 +
 image::images/Picture23.png[Instalación de JDK]
@@ -354,9 +372,9 @@ sudo apt-get install git
 
 ### Ant
 * btn:[Instalaciones de Ant...] / btn:[Añadir Ant] 
-* Nombre: *ant 1.10.1*
+* Nombre: *ant 1.10.12*
 * Marcar *Instalar automáticamente*
-* Version: *1.10.1*
+* Version: *1.10.12*
 
 image::images/Picture24.png[Instalación de Ant]
 
@@ -476,7 +494,7 @@ Más info: https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scan
 ## Actualización
 ### Actualización de Jenkins
 
-Si al iniciar Jenkins como administradores nos aparece un mensaje indicando que una nueva versión de Jenkins está disponible, es aconsejable actualizar. 
+Si al iniciar Jenkins como administradores nos aparece un mensaje indicando que una nueva versión de Jenkins está disponible, es *aconsejable actualizar siempre*. 
 
 image::images/new-version.png[Disponible nueva version de Jenkins]
 
@@ -496,7 +514,7 @@ sudo apt-get upgrade -y
 
 ### Actualización de plugins
 
-El enlace para gestionar los plugins nos muestra si hay actualizaciones disponibles
+El enlace para gestionar los plugins nos muestra si hay actualizaciones disponibles. Es recomendable actualizar siempre:
 
 image::images/manage-plugins-update.png[Actualizaciones de plugins disponibles]
 
@@ -513,6 +531,8 @@ image::images/plugins-restart.png[Reiniciar Jenkins...]
 ## Referencias
 
 * Jenkins 2 – Instalación de Jenkins en Ubuntu. Disponible en: https://www.jorgedelacruz.es/2017/02/14/jenkins-2-instalacion-de-jenkins-en-ubuntu/
+
+* https://www.digitalocean.com/community/tutorials/how-to-install-jenkins-on-ubuntu-20-04-es
 
 * https://www.howtoforge.com/tutorial/how-to-install-jenkins-with-apache-on-ubuntu-16-04/
 
