@@ -437,6 +437,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 #footer-text{color:rgba(0,0,0,.6);font-size:.9em}}
 @media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
 </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body class="book toc2 toc-right">
 <div id="header">
@@ -667,7 +668,7 @@ sudo apt-get upgrade -y</code></pre>
 <table>
 <tr>
 <td class="icon">
-<div class="title">Important</div>
+<i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
 Como prerequsito es necesario tener instalado Java. Compruebe que está configurado JAVA_HOME
@@ -796,7 +797,7 @@ To activate the new configuration, you need to run:
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-conf" data-lang="conf">&lt;Virtualhost *:80&gt;
-    ServerName        JENKINS.MACHINE.IP <b class="conum">(1)</b>
+    ServerName        JENKINS.MACHINE.IP <i class="conum" data-value="1"></i><b>(1)</b>
     ProxyRequests     Off
     ProxyPreserveHost On
     AllowEncodedSlashes NoDecode
@@ -808,19 +809,21 @@ To activate the new configuration, you need to run:
 
     ProxyPass         /  http://localhost:8080/ nocanon
     ProxyPassReverse  /  http://localhost:8080/
-    ProxyPassReverse  /  http://JENKINS.MACHINE.IP/ <b class="conum">(2)</b>
+    ProxyPassReverse  /  http://JENKINS.MACHINE.IP/ <i class="conum" data-value="2"></i><b>(2)</b>
 &lt;/Virtualhost&gt;</code></pre>
 </div>
 </div>
 <div class="colist arabic">
-<ol>
-<li>
-<p>Rercuerda sustituir <code>JENKINS.MACHINE.IP</code> por el DNS de la máquina virtual en Azure donde has instalado Jenkins.</p>
-</li>
-<li>
-<p>Rercuerda sustituir <code>JENKINS.MACHINE.IP</code> por el DNS de la máquina virtual</p>
-</li>
-</ol>
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Rercuerda sustituir <code>JENKINS.MACHINE.IP</code> por el DNS de la máquina virtual en Azure donde has instalado Jenkins.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Rercuerda sustituir <code>JENKINS.MACHINE.IP</code> por el DNS de la máquina virtual</td>
+</tr>
+</table>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -939,7 +942,7 @@ sudo systemctl restart jenkins</code></pre>
 <table>
 <tr>
 <td class="icon">
-<div class="title">Warning</div>
+<i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
 <div class="title">Qué hacer si nos hemos bloqueado y no podemos acceder</div>
@@ -960,7 +963,7 @@ sudo systemctl restart jenkins</code></pre>
 <table>
 <tr>
 <td class="icon">
-<div class="title">Note</div>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 <div class="title">Control de acceso con LDAP</div>
@@ -1118,7 +1121,7 @@ sudo systemctl restart jenkins</code></pre>
 <table>
 <tr>
 <td class="icon">
-<div class="title">Note</div>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 <div class="paragraph">
@@ -1185,7 +1188,7 @@ sudo systemctl restart jenkins</code></pre>
 <table>
 <tr>
 <td class="icon">
-<div class="title">Note</div>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 <div class="paragraph">
@@ -1199,7 +1202,7 @@ sudo systemctl restart jenkins</code></pre>
 <table>
 <tr>
 <td class="icon">
-<div class="title">Warning</div>
+<i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
 <div class="paragraph">
@@ -1502,7 +1505,7 @@ sudo apt-get upgrade -y</code></pre>
 <div id="footer">
 <div id="footer-text">
 Version 1.4<br>
-Last updated 2022-06-10 19:37:42 +0200
+Last updated 2022-06-10 19:44:45 +0200
 </div>
 </div>
 </body>

@@ -7,6 +7,7 @@ Codificación, idioma, tabla de contenidos, tipo de documento
 :toc-title: Tabla de contenidos
 :keywords: Jenkins
 :doctype: book
+:icons: font
 
 ////
 /// activar btn:
