@@ -17,7 +17,7 @@ Codificación, idioma, tabla de contenidos, tipo de documento
 ////
 Nombre y título del trabajo
 ////
-= Instalación de Jenkins en Ubuntu 20.04, 18.04 LTS con Certbot
+= Instalación de Jenkins en Ubuntu 20.04, 18.04 LTS con Certbot SSL
 Herramientas y Métodos de Ingeniería del Software
 Version 2.0, Marzo-2023
 Joaquín Cañadas <jjcanada@ual.es>
@@ -31,7 +31,7 @@ Joaquín Cañadas <jjcanada@ual.es>
 COLOCA A CONTINUACIÓN EL RESUMEN
 ////
 
-Tutorial de instalación de Jenkins 2 en Ubuntu 18.04 LTS.
+Tutorial de instalación de Jenkins en Ubuntu 20.04, 18.04 LTS con Certbot SSL.
 
 ////
 COLOCA A CONTINUACIÓN LOS OBJETIVOS
@@ -39,7 +39,7 @@ COLOCA A CONTINUACIÓN LOS OBJETIVOS
 .Objetivos
 * Actualizar el sistema Ubuntu 20.04, 18.04 en caso de que sea necesario
 * Instalar Jenkins (última versión)
-* Configurar un proxy inverso
+* Configurar Nginx como proxy inverso
 * Instalar certificado SSL con Certbot
 * Primeros pasos en Jenkins: configuración básica y plugins
 
@@ -628,7 +628,7 @@ image::images/plugins-restart.png[Reiniciar Jenkins...]
 # Bibliografía
 ## Referencias
 
-* Jenkins 2 – Instalación de Jenkins en Ubuntu. Disponible en: https://www.jorgedelacruz.es/2017/02/14/jenkins-2-instalacion-de-jenkins-en-ubuntu/
+* https://www.jorgedelacruz.es/2017/02/14/jenkins-2-instalacion-de-jenkins-en-ubuntu/[Jenkins 2 – Instalación de Jenkins en Ubuntu]
 
 * https://www.digitalocean.com/community/tutorials/how-to-install-jenkins-on-ubuntu-20-04-es
 
@@ -636,6 +636,7 @@ image::images/plugins-restart.png[Reiniciar Jenkins...]
 
 * https://pkg.jenkins.io/debian-stable/
 
+* https://www.cloudbooklet.com/how-to-install-jenkins-on-ubuntu-20-04-with-nginx-and-ssl/[How to Install Jenkins on Ubuntu 20.04 with Nginx and SSL]
 
 
 
