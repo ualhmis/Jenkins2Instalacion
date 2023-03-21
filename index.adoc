@@ -27,7 +27,7 @@ Nombre y título del trabajo
 ////
 = Instalación y configuración de Jenkins
 
-. link:docs/jenkins2_2023.html[Instalación de Jenkins Ubuntu 20.04, 18.04 con SSL Cerbot]
+. link:docs/jenkins2_2023.html[Instalación de Jenkins Ubuntu 20.04, 18.04 con SSL Certbot]
 
 . link:docs/jenkins2_2019.html[Instalación de Jenkins Ubuntu 18.04]
 
