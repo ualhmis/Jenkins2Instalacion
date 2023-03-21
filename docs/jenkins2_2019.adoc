@@ -18,7 +18,7 @@ Codificación, idioma, tabla de contenidos, tipo de documento
 Nombre y título del trabajo
 ////
 = Instalación de Jenkins 2 en Ubuntu 18.04 LTS
-Heramientas y Métodos de Ingeniería del Software
+Herramientas y Métodos de Ingeniería del Software
 Version 1.4, Febrero-2021
 Joaquín Cañadas <jjcanada@ual.es>
 Manel Mena <manel.mena@ual.es>
@@ -29,13 +29,13 @@ Manel Mena <manel.mena@ual.es>
 
 [abstract]
 ////
-COLOCA A CONTINUACION EL RESUMEN
+COLOCA A CONTINUACIÓN EL RESUMEN
 ////
 
 Tutorial de instalación de Jenkins 2 en Ubuntu 18.04 LTS.
 
 ////
-COLOCA A CONTINUACION LOS OBJETIVOS
+COLOCA A CONTINUACIÓN LOS OBJETIVOS
 ////
 .Objetivos
 * Actualizar el sistema Ubuntu 18.04 en caso de que sea necesario
@@ -46,12 +46,12 @@ COLOCA A CONTINUACION LOS OBJETIVOS
 // Entrar en modo numerado de apartados
 :numbered:
 
-# Prerequisitos
+# Prerrequisitos
 
 ## Creación de una máquina virtual para Jenkins
 Debes disponer de una máquina virtual en la nube para la instalación de Jenkins. Sigue los pasos que conoces para crear una máquina virtual. 
 
-## Actualizacion del sistema
+## Actualización del sistema
 ### Mensaje de reinicio
 
 Si aparece el mensaje `++***++ System restart required ++***++`
@@ -88,7 +88,7 @@ En caso contrario podemos comprobar si hay varias instalaciones de Java en el se
 [listing]
 sudo update-alternatives --config java
 
-image::images/java-alternatives-11.png[java -alternartives]
+image::images/java-alternatives-11.png[java -alternatives]
 
 ### Definiendo la Variable de Entorno `JAVA_HOME`
 
@@ -123,7 +123,7 @@ Esto devolverá la ruta que acaba de establecer.
 
 Instalaremos Jenkins en un sistema operativo basado en Ubuntu 18.04 LTS o 20.04 LTS. La instalación consiste en añadir los repositorios de Jenkins, actualizar nuestro sistema de repositorios y una vez acabado, instalar Jenkins.
 
-IMPORTANT: Como prerequsito es necesario tener instalado Java. Compruebe que está configurado JAVA_HOME
+IMPORTANT: Como prerrequisito es necesario tener instalado Java. Compruebe que está configurado JAVA_HOME
 
 Instalaremos Jenkins de la rama estable (versión Long-Term Support, LTS). Hay que tener en cuenta que esta versión de Jenkins se actualiza cada 12 semanas. Si queréis más información sobre la versión LTS de Jenkins, os dejo el enlace https://www.jenkins.io/download/lts/[aqui].
 
@@ -165,11 +165,11 @@ curl localhost:8080
 
 image::images/Picture5.png[Respuesta de Jenkins en el 8080]
 
-Necesitamos instalar un apache o nginx en modo *Reverse Proxy* para poder acceder a la administración de Jenkins mediante el puerto 80 (HTTP).
+Necesitamos instalar un Apache o Nginx en modo *Reverse Proxy* para poder acceder a la administración de Jenkins mediante el puerto 80 (HTTP).
 
 ## Instalación de Apache2 como Proxy Inverso 
 
-Instalamos Apache2 y lo configuramos para que actue como proxy inverso del puerto 8080.
+Instalamos Apache2 y lo configuramos para que actúe como proxy inverso del puerto 8080.
 [source,bash]
 ----
 sudo apt-get install apache2
@@ -221,8 +221,8 @@ Copiamos el siguiente texto como contenido del archivo, sustituyendo el texto _J
     ProxyPassReverse  /  http://JENKINS.MACHINE.IP/ <2>
 </Virtualhost>
 ----
-<1> Rercuerda sustituir `JENKINS.MACHINE.IP` por el DNS de la máquina virtual en Azure donde has instalado Jenkins.
-<2> Rercuerda sustituir `JENKINS.MACHINE.IP` por el DNS de la máquina virtual 
+<1> Recuerda sustituir `JENKINS.MACHINE.IP` por el DNS de la máquina virtual en Azure donde has instalado Jenkins.
+<2> Recuerda sustituir `JENKINS.MACHINE.IP` por el DNS de la máquina virtual 
 
 image::images/Picture7b.png[Archivo jenkins.conf]
 
@@ -238,7 +238,7 @@ sudo systemctl restart apache2
 sudo systemctl restart jenkins
 ----
 
-Y por último, comprobamos que los puertos 80 y 8080 están usados por Apache2 y Jenkins, respectivameten
+Y por último, comprobamos que los puertos 80 y 8080 están usados por Apache2 y Jenkins, respectivamente.
 
 [listing]
 netstat -plntu
@@ -253,7 +253,7 @@ Antes de realizar la primera configuración necesitaremos saber el password temp
 [listing]
 sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 
-Copiamos el password y lo pegamos en la siguiente pantalla, y hacemo click en btn:[Continuar]
+Copiamos el password y lo pegamos en la siguiente pantalla, y hacemos click en btn:[Continuar]
 
 image::images/Picture9.png[Unlock Jenkins]
 
@@ -261,7 +261,7 @@ Seguidamente instalaremos los plugins más comunes. No os preocupéis que poster
 
 image::images/Picture10.png[Install suggested plugins]
 
-Tras hacer clic en *Install suggested plugins*, el proceso de instalación de plugins tradará unos minutos:
+Tras hacer clic en *Install suggested plugins*, el proceso de instalación de plugins tardará unos minutos:
 
 image::images/Picture11.png[Jenkins plugins installations in progress]
 
@@ -285,7 +285,7 @@ Las versiones anteriores de Jenkins (v1.x) se instalaban sin ningún tipo de con
 
 Jenkins permite diversos *modos de acceso*. Vamos a configurar el más básico que es el de *Usar base de datos de Jenkins*, y marcamos *Permitir que los usuarios se registren*. A continuación, en la sección *Autorización*, marcamos *Configuración de seguridad*. En el campo de texto debemos escribir el nombre del usuario admin con el que hemos accedido, y a continuación hacer clic en el botón btn:[Añadir]. Tras ello, debemos marcarlo como *Administer*. Y por último btn:[Guardar]
 
-image::images/Picture16.png[Autorización. Configuración de seguirdad]
+image::images/Picture16.png[Autorización. Configuración de seguridad]
 
 .Qué hacer si nos hemos bloqueado y no podemos acceder
 [WARNING]
@@ -295,7 +295,7 @@ En caso de emergencia, si olvidamos la contraseña o no podemos acceder a Jenkin
 Más info en https://wiki.jenkins-ci.org/display/JENKINS/Securing+Jenkins[Securing Jenkins]
 ====
 
-Podemos registar nuevos usuarios mediante el formulario de registro de la página inicial (no estando logueados). Cada miembro del equipo debe registrarse como usuario. Mediante el usuario adminsitrador damos permisos a los nuevos usuarios registrados. 
+Podemos registrar nuevos usuarios mediante el formulario de registro de la página inicial (no estando logueados). Cada miembro del equipo debe registrarse como usuario. Mediante el usuario administrador damos permisos a los nuevos usuarios registrados. 
 
 .Control de acceso con LDAP
 [NOTE]
@@ -332,7 +332,7 @@ top -b -n 1 | head -n 5
 
 * Pulsamos *Guardar*
 
-image::images/Picture19.png[Configuracion proyecto basico]
+image::images/Picture19.png[Configuración proyecto básico]
 
 Tras ello hacemos clic en *Construir ahora* (_Build now_)
 
@@ -346,7 +346,7 @@ image::images/Picture21.png[Salida consola del primer ejemplo]
 
 ## Configuración de herramientas
 
-Jenkins hace uso de diversas herramientas a las que invoca a la hora de realizar tareas en la construcción de los proyectos. Estas herramientas deben ser instaladas y configuradas. Para ello vamos a *Admininstrar Jenkins* / *Global Tools configuration*
+Jenkins hace uso de diversas herramientas a las que invoca a la hora de realizar tareas en la construcción de los proyectos. Estas herramientas deben ser instaladas y configuradas. Para ello vamos a *Administrar Jenkins* / *Global Tools configuration*
 
 // image::images/Picture18.png[Crear un proyecto estilo libre]
 
@@ -400,7 +400,7 @@ En caso de que no esté disponible la configuración de instalaciones de Maven, 
 ## Instalación de plugins
 La gestión de los plugins se realiza desde *Administrar Jenkins* / *Administrar plugins*. 
 
-En la pestaña *Actualizaciones disponibles* (_Update_) debemos marcar todos los que se muestren y manternelos actualizados. 
+En la pestaña *Actualizaciones disponibles* (_Update_) debemos marcar todos los que se muestren y mantenerlos actualizados. 
 
 La pestaña *Todos los plugins* (_Available_) muestra la lista de todos los plugins que no tenemos instalados. De ella tenemos que seleccionar los siguientes:
 
@@ -425,7 +425,7 @@ image::images/Picture29.png[GitLab plugin]
 image::images/Picture32.png[Sonar plugin]
 
 
-Tras ello, hacemos clic en *Descargar ahora e instalar despues de reiniciar*. Y marcamos *Reiniciar Jenkins después de la instalación*
+Tras ello, hacemos clic en *Descargar ahora e instalar después de reiniciar*. Y marcamos *Reiniciar Jenkins después de la instalación*
 
 image::images/Picture30.png[Descargar plugins]
 
@@ -442,13 +442,13 @@ En caso de duda --> _Stackoverflow_ ;-)
 
 ### Configuración de GitLab
 
-Si queréis usar vuestro propio GitLab con Jenkins, tendreis que hacer una configuración de GitLab indicando la URL y el API Token. El API Token es un valor ligado al usuario de GitLab disponible en *User Settings* / *Account*:
+Si queréis usar vuestro propio GitLab con Jenkins, tendréis que hacer una configuración de GitLab indicando la URL y el API Token. El API Token es un valor ligado al usuario de GitLab disponible en *User Settings* / *Account*:
 
 image::images/gitlab-token.png[GitLab token]
 
 A continuación, en Jenkins, introducimos la configuración del servidor Gitlab: *Administrar Jenkins* / *Configurar sistema*. Al  final de la página encontrarás la sección de GitLab.
 
-image::images/Picture31.png[Giltal Configuration]
+image::images/Picture31.png[Gitlab Configuration]
 
 * Nombre de la conexión: _mi gitlab_
 * Gitlab Host URL: http://_mi_IP_gitlab_
@@ -483,7 +483,7 @@ Descender en la página a la sección de configuración *SonarQube Scanner*, y:
 * Nombre: *SonarQube scanner 3.x.x*
 * Version: _la última disponible_
 
-image::images/Picture33.png[Configuracion de SonarQube scanner tool]
+image::images/Picture33.png[Configuración de SonarQube scanner tool]
 
 Se debe crear un token de autenticación desde el servidor SonarQube, creado como una credencial 'Secret Text'. Si aun no dispone de un servidor SonarQube, déjelo en blanco.
 
