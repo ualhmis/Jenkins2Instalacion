@@ -453,11 +453,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_prerrequisitos">Prerrequisitos</a>
 <ul class="sectlevel1">
 <li><a href="#_creación_de_una_máquina_virtual_para_jenkins">1. Creación de una máquina virtual para Jenkins</a></li>
-<li><a href="#_actualización_del_sistema">2. Actualización del sistema</a>
-<ul class="sectlevel2">
-<li><a href="#_mensaje_de_reinicio">2.1. Mensaje de reinicio</a></li>
-</ul>
-</li>
+<li><a href="#_actualización_del_sistema">2. Actualización del sistema</a></li>
 <li><a href="#_instalar_java">3. Instalar Java</a>
 <ul class="sectlevel2">
 <li><a href="#_definiendo_la_variable_de_entorno_java_home">3.1. Definiendo la Variable de Entorno <code>JAVA_HOME</code></a></li>
@@ -469,7 +465,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel1">
 <li><a href="#_instalación_de_jenkins_mediante_paquetes">4. Instalación de Jenkins mediante paquetes</a></li>
 <li><a href="#_instalación_de_nginx_como_proxy_inverso">5. Instalación de Nginx como Proxy Inverso</a></li>
-<li><a href="#_instalación_de_lets_encrypt_ssl">6. Instalación de Let’s Encrypt SSL</a></li>
+<li><a href="#_instalación_de_lets_encrypt_ssl_optativo">6. Instalación de Let’s Encrypt SSL (optativo)</a></li>
 </ul>
 </li>
 <li><a href="#_configuración_de_jenkins_2">Configuración de Jenkins 2</a>
@@ -553,8 +549,15 @@ Tutorial de instalación de Jenkins en Ubuntu 20.04, 18.04 LTS con Certbot SSL.
 <div class="sect1">
 <h2 id="_actualización_del_sistema">2. Actualización del sistema</h2>
 <div class="sectionbody">
-<div class="sect2">
-<h3 id="_mensaje_de_reinicio">2.1. Mensaje de reinicio</h3>
+<div class="paragraph">
+<p>Actualiza los paquetes</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">sudo apt-get update -y
+sudo apt-get upgrade -y</code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p>Si aparece el mensaje <code>*** System restart required ***</code>
 ejecutar</p>
@@ -567,16 +570,6 @@ ejecutar</p>
 <div class="imageblock">
 <div class="content">
 <img src="images/Picture1.png" alt="Reiniciar el sistema">
-</div>
-</div>
-<div class="paragraph">
-<p>Tras ello, actualizar los paquetes</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">sudo apt-get update -y
-sudo apt-get upgrade -y</code></pre>
-</div>
 </div>
 </div>
 </div>
@@ -721,7 +714,7 @@ sudo apt-get install jenkins -y</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>netstat -plntu</pre>
+<pre>sudo netstat -plntu</pre>
 </div>
 </div>
 <div class="imageblock">
@@ -880,7 +873,7 @@ sudo service nginx restart</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_instalación_de_lets_encrypt_ssl">6. Instalación de Let’s Encrypt SSL</h2>
+<h2 id="_instalación_de_lets_encrypt_ssl_optativo">6. Instalación de Let’s Encrypt SSL (optativo)</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Certbot by Let’s Encrypt proporciona certificados SSL gratuitos, permitiendo que cualquiera pueda usar HTTPS.</p>
@@ -965,7 +958,7 @@ sudo service nginx restart</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>netstat -plntu</pre>
+<pre>sudo netstat -plntu</pre>
 </div>
 </div>
 <div class="imageblock">
@@ -1644,7 +1637,7 @@ sudo apt-get upgrade -y</code></pre>
 <div id="footer">
 <div id="footer-text">
 Version 2.0<br>
-Last updated 2023-03-21 11:30:00 +0100
+Last updated 2023-03-21 11:45:11 +0100
 </div>
 </div>
 </body>

@@ -52,7 +52,13 @@ COLOCA A CONTINUACIÓN LOS OBJETIVOS
 Debes disponer de una máquina virtual en la nube para la instalación de Jenkins. Sigue los pasos que conoces para crear una máquina virtual. 
 
 ## Actualización del sistema
-### Mensaje de reinicio
+
+Actualiza los paquetes 
+[source,bash]
+----
+sudo apt-get update -y
+sudo apt-get upgrade -y
+----
 
 Si aparece el mensaje `++***++ System restart required ++***++`
 ejecutar
@@ -63,12 +69,6 @@ sudo reboot -h now
 
 image::images/Picture1.png[Reiniciar el sistema]
 
-Tras ello, actualizar los paquetes 
-[source,bash]
-----
-sudo apt-get update -y
-sudo apt-get upgrade -y
-----
 
 ## Instalar Java
 
@@ -154,7 +154,7 @@ Si todo salió bien, la primera parte del resultado de estado mostrará que el s
 
 Y comprobamos también que Jenkins está funcionando en el puerto 8080
 [listing]
-netstat -plntu
+sudo netstat -plntu
 
 image::images/Picture4.png[Listado puertos activos]
 
@@ -254,7 +254,7 @@ netstat -plntu
 image::images/Picture8.png[Listado de puertos activos 80 y 8080]
 
 
-## Instalación de Let’s Encrypt SSL
+## Instalación de Let’s Encrypt SSL (optativo)
 
 Certbot by Let’s Encrypt proporciona certificados SSL gratuitos, permitiendo que cualquiera pueda usar HTTPS. 
 
@@ -323,7 +323,7 @@ Y comprueba los puertos abiertos en tu máquina:
 Y por último, comprobamos que los puertos 80 y 8080 están usados por Nginx y Jenkins, respectivamente.
 
 [listing]
-netstat -plntu
+sudo netstat -plntu
 
 image::images/ssl-ok.png[Listado de puertos activos 80, 443y 8080]
 
