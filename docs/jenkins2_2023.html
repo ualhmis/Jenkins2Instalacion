@@ -582,7 +582,7 @@ ejecutar</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>sudo apt install openjdk-11-jdk -y</pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">sudo apt install openjdk-11-jdk -y</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -590,7 +590,7 @@ ejecutar</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>java -version</pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">java -version</code></pre>
 </div>
 </div>
 <div class="imageblock">
@@ -603,7 +603,7 @@ ejecutar</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>sudo update-alternatives --config java</pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">sudo update-alternatives --config java</code></pre>
 </div>
 </div>
 <div class="imageblock">
@@ -615,7 +615,7 @@ ejecutar</p>
 <h3 id="_definiendo_la_variable_de_entorno_java_home">3.1. Definiendo la Variable de Entorno <code>JAVA_HOME</code></h3>
 <div class="listingblock">
 <div class="content">
-<pre>sudo nano /etc/environment</pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">sudo nano /etc/environment</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -623,7 +623,7 @@ ejecutar</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64"</code></pre>
+<pre class="highlight"><code class="language-conf" data-lang="conf">JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -631,7 +631,7 @@ ejecutar</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>source /etc/environment</pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">source /etc/environment</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -695,7 +695,7 @@ sudo apt-get install jenkins -y</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>sudo systemctl start jenkins</pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">sudo systemctl start jenkins</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -703,7 +703,7 @@ sudo apt-get install jenkins -y</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>sudo systemctl status  jenkins</pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">sudo systemctl status jenkins</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -714,7 +714,7 @@ sudo apt-get install jenkins -y</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>sudo netstat -plntu</pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">sudo netstat -plntu</code></pre>
 </div>
 </div>
 <div class="imageblock">
@@ -727,7 +727,7 @@ sudo apt-get install jenkins -y</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>curl localhost:8080</pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">curl localhost:8080</code></pre>
 </div>
 </div>
 <div class="imageblock">
@@ -764,16 +764,16 @@ sudo apt-get install jenkins -y</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>sudo rm -rf /etc/nginx/sites-available/default
-sudo rm -rf /etc/nginx/sites-enabled/default</pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">sudo rm -rf /etc/nginx/sites-available/default
+sudo rm -rf /etc/nginx/sites-enabled/default</code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>Creamos un nuevo archivo de configuración para Jenkins, sustituyendo <em>JENKINS.MACHINE.DNS</em> por la DNS generada en AZURE de la máquina Jenkins:</p>
 </div>
-<div class="literalblock">
+<div class="listingblock">
 <div class="content">
-<pre>sudo nano /etc/nginx/sites-available/JENINS.MACHINE.DNS</pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">sudo nano /etc/nginx/sites-available/JENKINS.MACHINE.DNS</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -821,12 +821,24 @@ sudo rm -rf /etc/nginx/sites-enabled/default</pre>
 </tr>
 </table>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Se recomienda copiar el texto y editarlo en local con Notepad++ o cualquier otro editor, para hacer la búsqueda y reemplazo de <code>JENKINS.MACHINE.DNS</code> por el DNS de la máquina virtual. Tras ello, copia y pega el texto definitivo en el archivo abierto con <em>nano</em> en el terminal SSH.
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>Para que Jenkins trabaje con Nginx, necesitamos hacer que Jenkins escuche en <code>localhost</code>. Para ello, editamos el archivo <code>/etc/default/jenkins</code></p>
 </div>
-<div class="literalblock">
+<div class="listingblock">
 <div class="content">
-<pre>sudo nano /etc/default/jenkins</pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">sudo nano /etc/default/jenkins</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -835,9 +847,9 @@ sudo rm -rf /etc/nginx/sites-enabled/default</pre>
 <div class="paragraph">
 <p>La linea quedaría así:</p>
 </div>
-<div class="literalblock">
+<div class="listingblock">
 <div class="content">
-<pre>JENKINS_ARGS="--webroot=/var/cache/$NAME/war --httpPort=$HTTP_PORT --httpListenAddress=127.0.0.1"</pre>
+<pre class="highlight"><code class="language-conf" data-lang="conf">JENKINS_ARGS="--webroot=/var/cache/$NAME/war --httpPort=$HTTP_PORT --httpListenAddress=127.0.0.1"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -862,7 +874,7 @@ sudo service nginx restart</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>netstat -plntu</pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">netstat -plntu</code></pre>
 </div>
 </div>
 <div class="imageblock">
@@ -878,17 +890,17 @@ sudo service nginx restart</code></pre>
 <div class="paragraph">
 <p>Certbot by Let’s Encrypt proporciona certificados SSL gratuitos, permitiendo que cualquiera pueda usar HTTPS.</p>
 </div>
-<div class="literalblock">
+<div class="listingblock">
 <div class="content">
-<pre>sudo apt-get install python3-certbot-nginx</pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">sudo apt-get install python3-certbot-nginx</code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>Ahora que has instalado Certbot by Let’s Encrypt para Ubuntu 20.04, ejecuta el siguiente comando para recibir tus certificados:</p>
 </div>
-<div class="literalblock">
+<div class="listingblock">
 <div class="content">
-<pre>sudo certbot --nginx certonly</pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">sudo certbot --nginx certonly</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -900,9 +912,9 @@ sudo service nginx restart</code></pre>
 <div class="paragraph">
 <p>Una vez que se instala SSL, puede configurarlo en su archivo Nginx.</p>
 </div>
-<div class="literalblock">
+<div class="listingblock">
 <div class="content">
-<pre>sudo nano /etc/nginx/sites-available/JENINS.MACHINE.DNS</pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">sudo nano /etc/nginx/sites-available/JENKINS.MACHINE.DNS</code></pre>
 </div>
 </div>
 <div class="listingblock">
@@ -958,7 +970,7 @@ sudo service nginx restart</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>sudo netstat -plntu</pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">sudo netstat -plntu</code></pre>
 </div>
 </div>
 <div class="imageblock">
@@ -972,16 +984,18 @@ sudo service nginx restart</code></pre>
 <div class="paragraph">
 <p>Los certificados que proporciona  Let’s Encrypt son válidos solo por 90 días, por lo que debes renovarlos con frecuencia. A continuación, vamos a configurar un cronjob para verificar si el certificado vencerá en los próximos 30 días y renovarlo automáticamente.</p>
 </div>
-<div class="literalblock">
+<div class="listingblock">
 <div class="content">
-<pre>sudo crontab -e</pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">sudo crontab -e</code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>Añade esta linea al final del archivo</p>
 </div>
-<div class="paragraph">
-<p>0 0 1 * * certbot renew &gt;/dev/null 2&gt;&amp;1</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-conf" data-lang="conf">0 0 1 * * certbot renew &gt;/dev/null 2&gt;&amp;1</code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>Renueva el certificado a las 0h del dia 1 de cada mes.</p>
@@ -1000,7 +1014,7 @@ sudo service nginx restart</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>sudo cat /var/lib/jenkins/secrets/initialAdminPassword</pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">sudo cat /var/lib/jenkins/secrets/initialAdminPassword</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1162,7 +1176,7 @@ sudo service nginx restart</code></pre>
 <p>En comando escribimos</p>
 <div class="listingblock">
 <div class="content">
-<pre>top -b -n 1 | head -n 5</pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">top -b -n 1 | head -n 5</code></pre>
 </div>
 </div>
 </li>
@@ -1258,7 +1272,7 @@ sudo service nginx restart</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>sudo apt-get install git</pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">sudo apt-get install git</code></pre>
 </div>
 </div>
 </td>
@@ -1421,6 +1435,18 @@ sudo service nginx restart</code></pre>
 </div>
 <div class="paragraph">
 <p>En caso de duda -&#8594; <em>Stackoverflow</em> ;-)</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Las siguientes secciones pueden estar desactualizadas. Si los pasos no son exactamente iguales en la versión actual de Jenkins, busca en internet ayuda para realizar la configuración de GitLab y SonarQube indicada.
+</td>
+</tr>
+</table>
 </div>
 <div class="sect2">
 <h3 id="_configuración_de_gitlab">12.1. Configuración de GitLab</h3>
@@ -1637,7 +1663,7 @@ sudo apt-get upgrade -y</code></pre>
 <div id="footer">
 <div id="footer-text">
 Version 2.0<br>
-Last updated 2023-03-24 09:47:55 +0100
+Last updated 2023-03-24 19:59:21 +0100
 </div>
 </div>
 <style>
