@@ -439,7 +439,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
-<body class="book toc2 toc-right">
+<body class="book toc2 toc-right doc">
 <div id="header">
 <h1>Instalación de Jenkins en Ubuntu 20.04, 18.04 LTS con Certbot SSL</h1>
 <div class="details">
@@ -1221,7 +1221,7 @@ sudo service nginx restart</code></pre>
 <p>Nombre: <strong>OpenJDK-11</strong></p>
 </li>
 <li>
-<p>JAVA_HOME: <strong>/usr/lib/jvm/java-8-openjdk-amd64/</strong></p>
+<p>JAVA_HOME: <strong>/usr/lib/jvm/java-11-openjdk-amd64/</strong></p>
 <div class="imageblock">
 <div class="content">
 <img src="images/Picture23.png" alt="Instalación de JDK">
@@ -1637,8 +1637,102 @@ sudo apt-get upgrade -y</code></pre>
 <div id="footer">
 <div id="footer-text">
 Version 2.0<br>
-Last updated 2023-03-21 11:45:11 +0100
+Last updated 2023-03-24 09:47:55 +0100
 </div>
 </div>
+<style>
+    .doc .listingblock > .content {
+      position: relative;
+    }
+
+    .doc .listingblock code[data-lang]::before {
+      content: none;
+    }
+
+    .doc .source-toolbox {
+      display: flex;
+      position: absolute;
+      visibility: hidden;
+      top: 0.25rem;
+      right: 0.5rem;
+      color: #808080;
+      white-space: nowrap;
+      font-size: 0.85em;
+    }
+
+    .doc .listingblock:hover .source-toolbox {
+      visibility: visible;
+    }
+
+    .doc .source-toolbox .source-lang {
+      font-family: "Droid Sans Mono", "DejaVu Sans Mono", monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.075em;
+    }
+
+    .doc .source-toolbox > :not(:last-child)::after {
+      content: "|";
+      letter-spacing: 0;
+      padding: 0 1ch;
+    }
+
+    .doc .source-toolbox .copy-button {
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: none;
+      border: none;
+      color: inherit;
+      outline: none;
+      padding: 0;
+      font-family: inherit;
+      font-size: inherit;
+      line-height: inherit;
+      width: 1em;
+      height: 1em;
+    }
+
+    .doc .source-toolbox .copy-icon {
+      flex: none;
+      width: inherit;
+      height: inherit;
+      filter: invert(50.2%);
+      margin-top: 0.05em;
+    }
+
+    .doc .source-toolbox .copy-toast {
+      flex: none;
+      position: relative;
+      display: inline-flex;
+      justify-content: center;
+      margin-top: 1em;
+      border-radius: 0.25em;
+      padding: 0.5em;
+      cursor: auto;
+      opacity: 0;
+      transition: opacity 0.5s ease 0.75s;
+      background: rgba(0, 0, 0, 0.8);
+      color: #fff;
+    }
+
+    .doc .source-toolbox .copy-toast::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      width: 1em;
+      height: 1em;
+      border: 0.55em solid transparent;
+      border-left-color: rgba(0, 0, 0, 0.8);
+      transform: rotate(-90deg) translateX(50%) translateY(50%);
+      transform-origin: left;
+    }
+
+    .doc .source-toolbox .copy-button.clicked .copy-toast {
+      opacity: 1;
+      transition: none;
+    }
+    </style>
+    <script src="copy-to-clipboard.js"></script>
 </body>
 </html>

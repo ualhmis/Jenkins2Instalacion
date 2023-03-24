@@ -15,6 +15,13 @@ Codificación, idioma, tabla de contenidos, tipo de documento
 :experimental:
 
 ////
+///  Copy button on code blocks
+////
+[.doc]
+
+:docinfo: shared-footer
+
+////
 Nombre y título del trabajo
 ////
 = Instalación de Jenkins en Ubuntu 20.04, 18.04 LTS con Certbot SSL
@@ -452,7 +459,7 @@ image::images/Picture22.png[Global Tools Configuration]
 ### JDK
 * btn:[Añadir JDK] 
 * Nombre: *OpenJDK-11* 
-* JAVA_HOME: */usr/lib/jvm/java-8-openjdk-amd64/*
+* JAVA_HOME: */usr/lib/jvm/java-11-openjdk-amd64/*
 +
 image::images/Picture23.png[Instalación de JDK]
 
