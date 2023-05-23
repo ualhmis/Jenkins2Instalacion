@@ -421,6 +421,11 @@ Más info en https://wiki.jenkins-ci.org/display/JENKINS/Securing+Jenkins[Securi
 
 Podemos registrar nuevos usuarios mediante el formulario de registro de la página inicial (no estando logueados). Cada miembro del equipo debe registrarse como usuario. Mediante el usuario administrador damos permisos a los nuevos usuarios registrados. 
 
+[WARNING]
+====
+Una vez creadas las cuentas de todos los usuarios es recomendable desactivar la opción de registro de usuarios. Para ello, en *Administrar Jenkins* / *Configuración global de seguridad*, desmarcamos *Permitir que los usuarios se registren*.
+====
+
 .Control de acceso con LDAP
 [NOTE]
 ====
