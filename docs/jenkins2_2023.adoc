@@ -593,6 +593,9 @@ En un proximo tutorial veremos como usar un repositorio GitLab en un proyecto Je
 
 ### Configuración de SonarQube
 
+[WARNING]
+Esta sección está desactualizada. Busca en internet ayuda para realizar la configuración de SonarQube indicada.
+
 SonarQube es una plataforma de calidad de código fuente. SonarQube proporciona diversas herramientas de análisis estático de código fuente como Checkstyle, PMD o FindBugs para obtener métricas que pueden ayudar a mejorar la calidad del código de un programa.
 
 Primero hemos de instalar el plugin de Sonar y luego configurarlo.
