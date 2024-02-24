@@ -7,7 +7,7 @@
 <meta name="generator" content="Asciidoctor 2.0.17">
 <meta name="keywords" content="Jenkins">
 <meta name="author" content="Herramientas y Métodos de Ingeniería del Software">
-<title>Instalación de Jenkins en Ubuntu 20.04, 18.04 LTS con Certbot SSL</title>
+<title>Instalación de Jenkins en Ubuntu 22.04, 20.04, 18.04 LTS con Certbot SSL</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -441,11 +441,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="book toc2 toc-right doc">
 <div id="header">
-<h1>Instalación de Jenkins en Ubuntu 20.04, 18.04 LTS con Certbot SSL</h1>
+<h1>Instalación de Jenkins en Ubuntu 22.04, 20.04, 18.04 LTS con Certbot SSL</h1>
 <div class="details">
 <span id="author" class="author">Herramientas y Métodos de Ingeniería del Software</span><br>
-<span id="revnumber">version 2.0,</span>
-<span id="revdate">Marzo-2023</span>
+<span id="revnumber">version 3.0,</span>
+<span id="revdate">Febrero-2024</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Tabla de contenidos</div>
@@ -461,7 +461,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 </ul>
 </li>
-<li><a href="#_instalación_de_jenkins_2">Instalación de Jenkins 2</a>
+<li><a href="#_instalación_de_jenkins">Instalación de Jenkins</a>
 <ul class="sectlevel1">
 <li><a href="#_instalación_de_jenkins_mediante_paquetes">4. Instalación de Jenkins mediante paquetes</a></li>
 <li><a href="#_instalación_de_nginx_como_proxy_inverso">5. Instalación de Nginx como Proxy Inverso</a></li>
@@ -519,7 +519,7 @@ Tutorial de instalación de Jenkins en Ubuntu 20.04, 18.04 LTS con Certbot SSL.
 <div class="title">Objetivos</div>
 <ul>
 <li>
-<p>Actualizar el sistema Ubuntu 20.04, 18.04 en caso de que sea necesario</p>
+<p>Actualizar el sistema Ubuntu 22.04, 20.04, 18.04 en caso de que sea necesario</p>
 </li>
 <li>
 <p>Instalar Jenkins (última versión)</p>
@@ -653,12 +653,12 @@ ejecutar</p>
 </div>
 </div>
 </div>
-<h1 id="_instalación_de_jenkins_2" class="sect0">Instalación de Jenkins 2</h1>
+<h1 id="_instalación_de_jenkins" class="sect0">Instalación de Jenkins</h1>
 <div class="sect1">
 <h2 id="_instalación_de_jenkins_mediante_paquetes">4. Instalación de Jenkins mediante paquetes</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Instalaremos Jenkins en un sistema operativo basado en Ubuntu 18.04 LTS o 20.04 LTS. La instalación consiste en añadir los repositorios de Jenkins, actualizar nuestro sistema de repositorios y una vez acabado, instalar Jenkins.</p>
+<p>Instalaremos Jenkins en un sistema operativo basado en Ubuntu 22.04 LTS, 20.04 LTS o 18.04 LTS. La instalación consiste en añadir los repositorios de Jenkins, actualizar nuestro sistema de repositorios y una vez acabado, instalar Jenkins.</p>
 </div>
 <div class="admonitionblock important">
 <table>
@@ -680,18 +680,60 @@ Como prerrequisito es necesario tener instalado Java. Compruebe que está config
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
-
-sudo sh -c 'echo deb https://pkg.jenkins.io/debian-stable binary/ &gt; \
-    /etc/apt/sources.list.d/jenkins.list'
-
-sudo apt-get update -y
-
-sudo apt-get install jenkins -y</code></pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">sudo wget -O /usr/share/keyrings/jenkins-keyring.asc \
+    https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
+    https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
+    /etc/apt/sources.list.d/jenkins.list &gt; /dev/null</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>A continuación, levantamos el servicio:</p>
+<p>Actualiza e instala.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">sudo apt-get update -y</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">sudo apt-get install jenkins -y</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>En caso de que no se pueda instalar Jenkins, revise si el comando ha sido actualizado en los pasos de <a href="https://www.jenkins.io/doc/book/installing/linux/#debianubuntu">instalación de Jenkins en Ubuntu</a>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>A continuación, comprueba el estado del servicio:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">sudo systemctl status jenkins</code></pre>
+</div>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="images/estado-servicio-jenkins.png" alt="estado servicio jenkins" width="100%">
+</div>
+<div class="title">Fig. 1. Estado del servicio Jenkins</div>
+</div>
+<div class="paragraph">
+<p>En caso de que no esté activo, levantamos el servicio:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -707,7 +749,7 @@ sudo apt-get install jenkins -y</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Si todo salió bien, la primera parte del resultado de estado mostrará que el servicio está <strong>activo</strong>.</p>
+<p>Si todo salió bien, mostrará que el servicio está <strong>activo</strong>.</p>
 </div>
 <div class="paragraph">
 <p>Y comprobamos también que Jenkins está funcionando en el puerto 8080</p>
@@ -736,7 +778,7 @@ sudo apt-get install jenkins -y</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Necesitamos instalar un Apache o Nginx en modo <strong>Reverse Proxy</strong> para poder acceder a la administración de Jenkins mediante el puerto 80 (HTTP).</p>
+<p>Jenkins se está ejecutando en el puerto 8080. Necesitamos instalar un Apache o Nginx en modo <strong>Reverse Proxy</strong> para poder acceder a la administración de Jenkins mediante el puerto 80 (HTTP).</p>
 </div>
 </div>
 </div>
@@ -748,24 +790,15 @@ sudo apt-get install jenkins -y</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">sudo apt install nginx</code></pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">sudo apt install nginx -y</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Comprobamos que Nginx está funcionando en el puerto 80:</p>
+<p>Comprobamos que Nginx está funcionando en el puerto 80: abre el navegador, introduce la dirección IP de tu máquina virtual y verás la página de bienvenida de Nginx.</p>
 </div>
 <div class="imageblock">
 <div class="content">
 <img src="images/nginx-home.png" alt="Nginx homepage">
-</div>
-</div>
-<div class="paragraph">
-<p>A continuación, eliminamos la configuración predeterminada:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">sudo rm -rf /etc/nginx/sites-available/default
-sudo rm -rf /etc/nginx/sites-enabled/default</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -834,6 +867,39 @@ Se recomienda copiar el texto y editarlo en local con Notepad++ o cualquier otro
 </table>
 </div>
 <div class="paragraph">
+<p>Tenemos que configurar Nginx para que use el archivo de configuración que acabamos de crear, así que eliminamos la configuración predeterminada:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">sudo rm -rf /etc/nginx/sites-available/default</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">sudo rm -rf /etc/nginx/sites-enabled/default</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A continuación, creamos un enlace simbólico `default`a la nueva configuración de Nginx:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">sudo ln -s /etc/nginx/sites-available/JENKINS.MACHINE.DNS /etc/nginx/sites-enabled/default</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Recuerda sustituir <code>JENKINS.MACHINE.DNS</code> por el DNS de la máquina virtual en Azure.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
 <p>Para que Jenkins trabaje con Nginx, necesitamos hacer que Jenkins escuche en <code>localhost</code>. Para ello, editamos el archivo <code>/etc/default/jenkins</code></p>
 </div>
 <div class="listingblock">
@@ -879,7 +945,7 @@ sudo service nginx restart</code></pre>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/Picture8.png" alt="Listado de puertos activos 80 y 8080">
+<img src="images/Picture8.png" alt="Listado de puertos activos: 80 y 8080">
 </div>
 </div>
 </div>
@@ -892,11 +958,11 @@ sudo service nginx restart</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">sudo apt-get install python3-certbot-nginx</code></pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">sudo apt-get install python3-certbot-nginx -y</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Ahora que has instalado Certbot by Let’s Encrypt para Ubuntu 20.04, ejecuta el siguiente comando para recibir tus certificados:</p>
+<p>Ahora que has instalado Certbot by Let’s Encrypt para Ubuntu, ejecuta el siguiente comando para recibir tus certificados:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -904,10 +970,19 @@ sudo service nginx restart</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Introduce un correo electrónico y acepta los términos y condiciones, luego recibirás la lista de dominios que necesita para generar el certificado SSL. Para seleccionar todos los dominios simplemente presione Enter.</p>
+<p>Introduce un correo electrónico y acepta los términos y condiciones (Y), no compartas tu email (N), luego recibirás la lista de dominios que necesita para generar el certificado SSL. Para seleccionar todos los dominios simplemente presiona Enter para dejar en blanco.</p>
 </div>
 <div class="paragraph">
-<p>El cliente de Certbot generará automáticamente el nuevo certificado para tu dominio. Ahora necesitamos actualizar la configuración de Nginx.</p>
+<p>El cliente de Certbot generará automáticamente el nuevo certificado para tu dominio.</p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="images/certificados-generados-ok.png" alt="certificados generados ok" width="100%">
+</div>
+<div class="title">Fig. 2. Certificados generados correctamente</div>
+</div>
+<div class="paragraph">
+<p>Ahora necesitamos actualizar la configuración de Nginx.</p>
 </div>
 <div class="paragraph">
 <p>Una vez que se instala SSL, puede configurarlo en su archivo Nginx.</p>
@@ -923,19 +998,19 @@ sudo service nginx restart</code></pre>
      listen [::]:80;
      listen 80;
 
-     server_name JENKINS.MACHINE.DNS;
+     server_name JENKINS.MACHINE.DNS; <i class="conum" data-value="1"></i><b>(1)</b>
 
-     return 301 https://JENKINS.MACHINE.DNS$request_uri;
+     return 301 https://JENKINS.MACHINE.DNS$request_uri; <i class="conum" data-value="1"></i><b>(1)</b>
  }
 
  server {
      listen [::]:443 ssl;
      listen 443 ssl;
 
-     server_name JENKINS.MACHINE.DNS;
+     server_name JENKINS.MACHINE.DNS; <i class="conum" data-value="1"></i><b>(1)</b>
 
-     ssl_certificate /etc/letsencrypt/live/JENKINS.MACHINE.DNS/fullchain.pem;
-     ssl_certificate_key /etc/letsencrypt/live/JENKINS.MACHINE.DNS/privkey.pem;
+     ssl_certificate /etc/letsencrypt/live/JENKINS.MACHINE.DNS/fullchain.pem; <i class="conum" data-value="1"></i><b>(1)</b>
+     ssl_certificate_key /etc/letsencrypt/live/JENKINS.MACHINE.DNS/privkey.pem; <i class="conum" data-value="1"></i><b>(1)</b>
 
      location / {
          proxy_set_header        Host $host:$server_port;
@@ -944,11 +1019,11 @@ sudo service nginx restart</code></pre>
          proxy_set_header        X-Forwarded-Proto $scheme;
          proxy_pass          http://127.0.0.1:8080;
          proxy_read_timeout  90;
-         proxy_redirect      http://127.0.0.1:8080 https://JENKINS.MACHINE.DNS;
+         proxy_redirect      http://127.0.0.1:8080 https://JENKINS.MACHINE.DNS; <i class="conum" data-value="1"></i><b>(1)</b>
 
          proxy_http_version 1.1;
          proxy_request_buffering off;
-         add_header 'X-SSH-Endpoint' 'JENKINS.MACHINE.DNS:50022' always;
+         add_header 'X-SSH-Endpoint' 'JENKINS.MACHINE.DNS:50022' always; <i class="conum" data-value="1"></i><b>(1)</b>
      }
  }</code></pre>
 </div>
@@ -1662,8 +1737,8 @@ sudo apt-get upgrade -y</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 2.0<br>
-Last updated 2023-03-24 19:59:21 +0100
+Version 3.0<br>
+Last updated 2024-02-24 15:04:23 +0100
 </div>
 </div>
 <style>

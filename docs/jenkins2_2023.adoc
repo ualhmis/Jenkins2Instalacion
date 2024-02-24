@@ -21,12 +21,15 @@ Codificación, idioma, tabla de contenidos, tipo de documento
 
 :docinfo: shared-footer
 
+:figure-caption: Fig.
+:imagesdir: images
+
 ////
 Nombre y título del trabajo
 ////
-= Instalación de Jenkins en Ubuntu 20.04, 18.04 LTS con Certbot SSL
+= Instalación de Jenkins en Ubuntu 22.04, 20.04, 18.04 LTS con Certbot SSL
 Herramientas y Métodos de Ingeniería del Software
-Version 2.0, Marzo-2023
+Version 3.0, Febrero-2024
 Joaquín Cañadas <jjcanada@ual.es>
 
 
@@ -44,7 +47,7 @@ Tutorial de instalación de Jenkins en Ubuntu 20.04, 18.04 LTS con Certbot SSL.
 COLOCA A CONTINUACIÓN LOS OBJETIVOS
 ////
 .Objetivos
-* Actualizar el sistema Ubuntu 20.04, 18.04 en caso de que sea necesario
+* Actualizar el sistema Ubuntu 22.04, 20.04, 18.04 en caso de que sea necesario
 * Instalar Jenkins (última versión)
 * Configurar Nginx como proxy inverso
 * Instalar certificado SSL con Certbot
@@ -74,26 +77,27 @@ ejecutar
 sudo reboot -h now
 ----
 
-image::images/Picture1.png[Reiniciar el sistema]
+.Reiniciar el sistema
+image::Picture1.png[Reiniciar el sistema]
 
 
 ## Instalar Java
 
-Puede instalar el JDK con el siguiente comando, es importante instalar al menos la versión 1.8 del JDK, si no Jenkins no funcionará. Aunque ya recomienda usar https://www.jenkins.io/doc/administration/requirements/upgrade-java-guidelines/[Java 11,window=_blank]
+Puede instalar el JDK con el siguiente comando, es importante instalar al menos la versión 1.8 del JDK, si no Jenkins no funcionará. Aunque ya recomienda usar https://www.jenkins.io/doc/administration/requirements/upgrade-java-guidelines/[Java 17,window=_blank]
 
 [source,bash]
 ----
-sudo apt install openjdk-11-jdk -y
+sudo apt install openjdk-17-jdk -y
 ----
 
-Primero comprobaremos si la versión activa de Java es la 11.
+Primero comprobaremos si la versión activa de Java es la 17.
 
 [source,bash]
 ----
 java -version
 ----
 
-image::images/java-version-11.png[java -version]
+image::java-version-17.png[java -version]
 
 En caso contrario podemos comprobar si hay varias instalaciones de Java en el servidor y elegir la pertinente:
 
@@ -102,7 +106,7 @@ En caso contrario podemos comprobar si hay varias instalaciones de Java en el se
 sudo update-alternatives --config java
 ----
 
-image::images/java-alternatives-11.png[java -alternatives]
+image::java-alternatives-17.png[java -alternatives]
 
 ### Definiendo la Variable de Entorno `JAVA_HOME`
 
@@ -114,7 +118,7 @@ sudo nano /etc/environment
 Al final de este archivo, agregue la siguiente línea, asegurándose de sustituir la ruta resaltada con la  ruta de jdk en su sistema.
 
 [source,conf]
-JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64"
+JAVA_HOME="/usr/lib/jvm/java-17-openjdk-amd64"
 
 Guarde, salga del archivo y vuelva a cargarlo.
 
@@ -130,13 +134,13 @@ echo $JAVA_HOME
 Esto devolverá la ruta que acaba de establecer.
 
 [listing]
-/usr/lib/jvm/java-11-openjdk-amd64
+/usr/lib/jvm/java-17-openjdk-amd64
 
-# Instalación de Jenkins 2
+# Instalación de Jenkins
 
 ## Instalación de Jenkins mediante paquetes
 
-Instalaremos Jenkins en un sistema operativo basado en Ubuntu 18.04 LTS o 20.04 LTS. La instalación consiste en añadir los repositorios de Jenkins, actualizar nuestro sistema de repositorios y una vez acabado, instalar Jenkins.
+Instalaremos Jenkins en un sistema operativo basado en Ubuntu 22.04 LTS, 20.04 LTS o 18.04 LTS. La instalación consiste en añadir los repositorios de Jenkins, actualizar nuestro sistema de repositorios y una vez acabado, instalar Jenkins.
 
 IMPORTANT: Como prerrequisito es necesario tener instalado Java. Compruebe que está configurado JAVA_HOME
 
@@ -146,17 +150,38 @@ Lo primero que haremos es añadir los repositorios de Jenkins e instalarlo media
 
 [source,bash]
 ----
-wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
-
-sudo sh -c 'echo deb https://pkg.jenkins.io/debian-stable binary/ > \
-    /etc/apt/sources.list.d/jenkins.list'
-
+sudo wget -O /usr/share/keyrings/jenkins-keyring.asc \
+    https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
+----
+[source,bash]
+----
+echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
+    https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
+    /etc/apt/sources.list.d/jenkins.list > /dev/null
+----
+Actualiza e instala.
+[source,bash]
+----
 sudo apt-get update -y
-
+----
+[source,bash]
+----
 sudo apt-get install jenkins -y
 ----
 
-A continuación, levantamos el servicio:
+[NOTE]
+====
+En caso de que no se pueda instalar Jenkins, revise si el comando ha sido actualizado en los pasos de https://www.jenkins.io/doc/book/installing/linux/#debianubuntu[instalación de Jenkins en Ubuntu].
+====
+
+A continuación, comprueba el estado del servicio: 
+[source,bash]
+sudo systemctl status jenkins	
+
+.Estado del servicio Jenkins
+image::estado-servicio-jenkins.png[role="thumb", align="center", width=100%]
+
+En caso de que no esté activo, levantamos el servicio:
 [source,bash]
 sudo systemctl start jenkins	
 
@@ -165,22 +190,24 @@ Debido a que `systemctl` no muestra un resultado de estado, utilizaremos el coma
 [source,bash]
 sudo systemctl status jenkins	
 
-Si todo salió bien, la primera parte del resultado de estado mostrará que el servicio está *activo*.
+Si todo salió bien, mostrará que el servicio está *activo*.
 
 Y comprobamos también que Jenkins está funcionando en el puerto 8080
 [source,bash]
 sudo netstat -plntu
 
-image::images/Picture4.png[Listado puertos activos]
+.Listado puertos activos
+image::Picture4.png[Listado puertos activos]
 
 Una vez realizada la instalación por defecto Jenkins estará escuchando en el puerto 8080. Podemos comprobarlo:
 
 [source,bash]
 curl localhost:8080
 
-image::images/Picture5.png[Respuesta de Jenkins en el 8080]
+.Respuesta de Jenkins en el 8080
+image::Picture5.png[Respuesta de Jenkins en el 8080]
 
-Necesitamos instalar un Apache o Nginx en modo *Reverse Proxy* para poder acceder a la administración de Jenkins mediante el puerto 80 (HTTP).
+Jenkins se está ejecutando en el puerto 8080. Necesitamos instalar un Apache o Nginx en modo *Reverse Proxy* para poder acceder a la administración de Jenkins mediante el puerto 80 (HTTP).
 
 ## Instalación de Nginx como Proxy Inverso
 
@@ -188,21 +215,12 @@ Instalamos Nginx y lo configuramos para que actúe como proxy inverso: Nginx rec
 
 [source,bash]
 ----
-sudo apt install nginx
+sudo apt install nginx -y
 ----
 
-Comprobamos que Nginx está funcionando en el puerto 80:
+Comprobamos que Nginx está funcionando en el puerto 80: abre el navegador, introduce la dirección IP de tu máquina virtual y verás la página de bienvenida de Nginx.
 
-image::images/nginx-home.png[Nginx homepage]
-
-A continuación, eliminamos la configuración predeterminada: 
-
-
-[source,bash]
-----
-sudo rm -rf /etc/nginx/sites-available/default
-sudo rm -rf /etc/nginx/sites-enabled/default
-----
+image::nginx-home.png[Nginx homepage]
 
 Creamos un nuevo archivo de configuración para Jenkins, sustituyendo _JENKINS.MACHINE.DNS_ por la DNS generada en AZURE de la máquina Jenkins: 
 
@@ -242,6 +260,21 @@ El contendido debe ser el siguiente, sustituyendo el texto _JENKINS.MACHINE.DNS_
 
 NOTE: Se recomienda copiar el texto y editarlo en local con Notepad++ o cualquier otro editor, para hacer la búsqueda y reemplazo de `JENKINS.MACHINE.DNS` por el DNS de la máquina virtual. Tras ello, copia y pega el texto definitivo en el archivo abierto con _nano_ en el terminal SSH.
 
+Tenemos que configurar Nginx para que use el archivo de configuración que acabamos de crear, así que eliminamos la configuración predeterminada: 
+
+[source,bash]
+sudo rm -rf /etc/nginx/sites-available/default
+
+[source,bash]
+sudo rm -rf /etc/nginx/sites-enabled/default
+
+A continuación, creamos un enlace simbólico `default`a la nueva configuración de Nginx:
+
+[source,bash]
+sudo ln -s /etc/nginx/sites-available/JENKINS.MACHINE.DNS /etc/nginx/sites-enabled/default
+
+NOTE: Recuerda sustituir `JENKINS.MACHINE.DNS` por el DNS de la máquina virtual en Azure.
+
 Para que Jenkins trabaje con Nginx, necesitamos hacer que Jenkins escuche en `localhost`. Para ello, editamos el archivo `/etc/default/jenkins`
 
 [source,bash]
@@ -273,7 +306,8 @@ Y por último, comprobamos que los puertos 80 y 8080 están usados por Nginx y J
 [source,bash]
 netstat -plntu
 
-image::images/Picture8.png[Listado de puertos activos 80 y 8080]
+.Listado de puertos activos: 80 y 8080
+image::Picture8.png[Listado de puertos activos: 80 y 8080]
 
 
 ## Instalación de Let’s Encrypt SSL (optativo)
@@ -281,16 +315,21 @@ image::images/Picture8.png[Listado de puertos activos 80 y 8080]
 Certbot by Let’s Encrypt proporciona certificados SSL gratuitos, permitiendo que cualquiera pueda usar HTTPS. 
 
 [source,bash]
-sudo apt-get install python3-certbot-nginx
+sudo apt-get install python3-certbot-nginx -y
 
-Ahora que has instalado Certbot by Let’s Encrypt para Ubuntu 20.04, ejecuta el siguiente comando para recibir tus certificados:
+Ahora que has instalado Certbot by Let’s Encrypt para Ubuntu, ejecuta el siguiente comando para recibir tus certificados:
 
 [source,bash]
-sudo certbot --nginx certonly
+sudo certbot --nginx certonly 
 
-Introduce un correo electrónico y acepta los términos y condiciones, luego recibirás la lista de dominios que necesita para generar el certificado SSL. Para seleccionar todos los dominios simplemente presione Enter.
+Introduce un correo electrónico y acepta los términos y condiciones (Y), no compartas tu email (N), luego recibirás la lista de dominios que necesita para generar el certificado SSL. Para seleccionar todos los dominios simplemente presiona Enter para dejar en blanco.
 
-El cliente de Certbot generará automáticamente el nuevo certificado para tu dominio. Ahora necesitamos actualizar la configuración de Nginx.
+El cliente de Certbot generará automáticamente el nuevo certificado para tu dominio.
+
+.Certificados generados correctamente
+image::certificados-generados-ok.png[role="thumb", align="center", width=100%]
+
+Ahora necesitamos actualizar la configuración de Nginx.
 
 // Configure SSL
 
@@ -299,25 +338,26 @@ Una vez que se instala SSL, puede configurarlo en su archivo Nginx.
 [source,bash]
 sudo nano /etc/nginx/sites-available/JENKINS.MACHINE.DNS
 
+Borra todo el contenido y añade el siguiente:
 [source,conf]
 ----
 server {
      listen [::]:80;
      listen 80;
 
-     server_name JENKINS.MACHINE.DNS;
+     server_name JENKINS.MACHINE.DNS; <1>
 
-     return 301 https://JENKINS.MACHINE.DNS$request_uri;
+     return 301 https://JENKINS.MACHINE.DNS$request_uri; <1>
  }
 
  server {
      listen [::]:443 ssl;
      listen 443 ssl;
 
-     server_name JENKINS.MACHINE.DNS;
+     server_name JENKINS.MACHINE.DNS; <1>
 
-     ssl_certificate /etc/letsencrypt/live/JENKINS.MACHINE.DNS/fullchain.pem;
-     ssl_certificate_key /etc/letsencrypt/live/JENKINS.MACHINE.DNS/privkey.pem;
+     ssl_certificate /etc/letsencrypt/live/JENKINS.MACHINE.DNS/fullchain.pem; <1>
+     ssl_certificate_key /etc/letsencrypt/live/JENKINS.MACHINE.DNS/privkey.pem; <1>
 
      location / {
          proxy_set_header        Host $host:$server_port;
@@ -326,14 +366,15 @@ server {
          proxy_set_header        X-Forwarded-Proto $scheme;
          proxy_pass          http://127.0.0.1:8080;
          proxy_read_timeout  90;
-         proxy_redirect      http://127.0.0.1:8080 https://JENKINS.MACHINE.DNS;
+         proxy_redirect      http://127.0.0.1:8080 https://JENKINS.MACHINE.DNS; <1>
 
          proxy_http_version 1.1;
          proxy_request_buffering off;
-         add_header 'X-SSH-Endpoint' 'JENKINS.MACHINE.DNS:50022' always;
+         add_header 'X-SSH-Endpoint' 'JENKINS.MACHINE.DNS:50022' always; <1>
      } 
  }
 ----
+<1> Recuerda sustituir `JENKINS.MACHINE.DNS` por el DNS de la máquina virtual en Azure donde has instalado Jenkins.
 
 De nuevo, comprueba la configuración y reinicia Nginx para que los cambios tengan efecto: 
 
@@ -350,12 +391,13 @@ Y por último, comprobamos que los puertos 80 y 8080 están usados por Nginx y J
 [source,bash]
 sudo netstat -plntu
 
-image::images/ssl-ok.png[Listado de puertos activos 80, 443y 8080]
+.Listado de puertos activos 80, 443 y 8080
+image::ssl-ok.png[Listado de puertos activos 80, 443 y 8080]
 
 
 *Renovación del certificado SSL*
 
-Los certificados que proporciona  Let’s Encrypt son válidos solo por 90 días, por lo que debes renovarlos con frecuencia. A continuación, vamos a configurar un cronjob para verificar si el certificado vencerá en los próximos 30 días y renovarlo automáticamente. 
+Los certificados que proporciona  Let’s Encrypt son válidos solo por *90 días*, por lo que deberás renovarlos al menos una vez durante el curso. A continuación, vamos a configurar un `cronjob` para verificar si el certificado vencerá en los próximos 30 días y renovarlo automáticamente. 
 
 [source,bash]
 sudo crontab -e
@@ -365,7 +407,7 @@ Añade esta linea al final del archivo
 [source,conf]
 0 0 1 * * certbot renew >/dev/null 2>&1
 
-Renueva el certificado a las 0h del dia 1 de cada mes. 
+Eso consigue que se renueve el certificado a las 0h del dia 1 de cada mes. 
 
 Eso es todo, ahora puedes visitar su nombre de dominio en el navegador web. Puedes ver la página de Jenkins con HTTPS. 
 
@@ -379,42 +421,50 @@ sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 
 Copiamos el password y lo pegamos en la siguiente pantalla, y hacemos click en btn:[Continuar]
 
-image::images/Picture9.png[Unlock Jenkins]
+image::Picture9.png[Unlock Jenkins]
 
 Seguidamente instalaremos los plugins más comunes. No os preocupéis que posteriormente instalaremos varios plugins más, de hecho una de las grandes ventajas que tiene Jenkins es la gran cantidad de plugins que hay.
 
-image::images/Picture10.png[Install suggested plugins]
+image::Picture10.png[Install suggested plugins]
 
 Tras hacer clic en *Install suggested plugins*, el proceso de instalación de plugins tardará unos minutos:
 
-image::images/Picture11.png[Jenkins plugins installations in progress]
+image::Picture11.png[Jenkins plugins installations in progress]
 
 Seguidamente nos solicitará un usuario y una contraseña de *admin*, el cual usaremos posteriormente poder acceder a la administración de Jenkins:
 
-image::images/Picture12.png[Create first Admin user]
+image::Picture12.png[Create first Admin user]
 
 Pulsamos el botón btn:[Save and Finish]
 
-image::images/Picture13.png[Jenkins is ready]
+image::Picture13.png[Jenkins is ready]
 
 Ya podemos acceder a Jenkins introduciendo el usuario y contraseña que acabamos de crear.
 
-image::images/Picture14.png[Bienvenido a Jenkins]
+.Bienvenido a Jenkins
+image::Picture14.png[Bienvenido a Jenkins]
 
 ## Securizando Jenkins
 
-Las versiones anteriores de Jenkins (v1.x) se instalaban sin ningún tipo de control de acceso para los usuarios. Esto implicaba que cualquier usuario podía usar la aplicación, lo que era totalmente desaconsejable. Por ello, lo primero era activar la seguridad. La versión actual (v2.x) crea un usuario Admin con el que hemos hecho el primer acceso, pero, en cualquier caso, sigue siendo necesario configurar la seguridad para poder gestionar el acceso a nuevos usuarios. Para ello, hacemos clic en *Administrar Jenkins* / *Configuración global de seguridad*.
+Las versiones anteriores de Jenkins (v1.x) se instalaban sin ningún tipo de control de acceso para los usuarios. Esto implicaba que cualquier usuario podía usar la aplicación, lo que era totalmente desaconsejable. Por ello, lo primero era activar la seguridad. La versión actual (v2.x) activa la autenticación de forma predeterminada, creando un usuario Admin con el que hemos hecho el primer acceso. Pero sigue siendo necesario configurar la seguridad para poder gestionar el acceso a nuevos usuarios. Para ello, hacemos clic en *Administrar Jenkins* / *Security*.
 
-// image::images/Picture15.png[Configuración global de seguridad]
+// image::Picture15.png[Configuración global de seguridad]
 
-Jenkins permite diversos *modos de acceso*. Vamos a configurar el más básico que es el de *Usar base de datos de Jenkins*, y marcamos *Permitir que los usuarios se registren*. A continuación, en la sección *Autorización*, marcamos *Configuración de seguridad*. En el campo de texto debemos escribir el nombre del usuario admin con el que hemos accedido, y a continuación hacer clic en el botón btn:[Añadir]. Tras ello, debemos marcarlo como *Administer*. Y por último btn:[Guardar]
+Jenkins permite diversos *modos de acceso*. Vamos a configurar el más básico que es el de *Usar base de datos de Jenkins*, y marcamos *Permitir que los usuarios se registren*. 
 
-image::images/Picture16.png[Autorización. Configuración de seguridad]
+.Permitir que los usuarios se registren
+image::security-permitir-usuarios-se-registren.png[Permitir que los usuarios se registren]
+
+
+Justo abajo, en la sección *Autorización*, marcamos *Configuración de seguridad*. En el campo de texto debemos escribir el nombre del usuario admin con el que hemos accedido, y a continuación hacer clic en el botón btn:[Añadir]. Tras ello, debemos marcarlo como *Administer*. Y por último btn:[Guardar]
+
+.Autorización. Configuración de seguridad. Añadir al usuario `Administer`
+image::Picture16.png[Autorización. Configuración de seguridad]
 
 .Qué hacer si nos hemos bloqueado y no podemos acceder
 [WARNING]
 ====
-En caso de emergencia, si olvidamos la contraseña o no podemos acceder a Jenkins, debemos seguir las instrucciones definidas aquí: https://wiki.jenkins-ci.org/display/JENKINS/Disable+security[Help! I locked myself out!]. 
+En caso de emergencia, si olvidamos la contraseña o no podemos acceder a Jenkins, debemos seguir las instrucciones definidas aquí: https://www.jenkins.io/doc/book/security/access-control/disable/[Help! I locked myself out!. Disable Access Control]. 
 
 Más info en https://wiki.jenkins-ci.org/display/JENKINS/Securing+Jenkins[Securing Jenkins]
 ====
@@ -437,15 +487,15 @@ Más info:
 
 Desde la página inicial de Jenkins, clic en *Nueva Tarea* (_Create new Job_)
 
-image::images/Nueva_Tarea.png[Nueva Tarea]
+image::Nueva_Tarea.png[Nueva Tarea]
 
 * Nombre: *prueba de sistema*
 * Seleccionar: *Crear un proyecto estilo libre*
 * btn:[Ok]
 
-image::images/Picture17.png[Selección tipo de Tarea]
+image::Picture17.png[Selección tipo de Tarea]
 
-Entramos en la configuración del nuevo proyecto. Seleccionamos la pestaña *Ejecutar*
+Entramos en la configuración del nuevo proyecto. Seleccionamos la sección  *Build steps*
 
 * Seleccionamos el botón *Añadir un nuevo paso*
 * Seleccionamos *Ejecutar línea de comandos (shell)*
@@ -456,32 +506,33 @@ top -b -n 1 | head -n 5
 
 * Pulsamos *Guardar*
 
-image::images/Picture19.png[Configuración proyecto básico]
+.Configuración proyecto básico
+image::new-job-prueba-ejecutar-shell.png[Configuración proyecto básico]
 
 Tras ello hacemos clic en *Construir ahora* (_Build now_)
 
-image::images/menu_build_now.png[Construir ahora]
+image::menu_build_now.png[Construir ahora]
 
 Tras la ejecución del proyecto, se puede ver el *Historial de tareas*, hacemos clic en la bolita azul de la primera ejecución y nos mostrará la *Salida de Consola*. Ahí podemos ver el resultado de la ejecución de este proyecto de prueba en Jenkins. 
 
-image::images/Picture20.png[Bolita azul para ver la Salida consola]
-image::images/Picture21.png[Salida consola del primer ejemplo]
+image::Picture20.png[Bolita azul para ver la Salida consola]
+image::Picture21.png[Salida consola del primer ejemplo]
 
 
 ## Configuración de herramientas
 
 Jenkins hace uso de diversas herramientas a las que invoca a la hora de realizar tareas en la construcción de los proyectos. Estas herramientas deben ser instaladas y configuradas. Para ello vamos a *Administrar Jenkins* / *Global Tools configuration*
 
-// image::images/Picture18.png[Crear un proyecto estilo libre]
+// image::Picture18.png[Crear un proyecto estilo libre]
 
-image::images/Picture22.png[Global Tools Configuration]
+image::Picture22.png[Global Tools Configuration]
 
 ### JDK
 * btn:[Añadir JDK] 
 * Nombre: *OpenJDK-11* 
 * JAVA_HOME: */usr/lib/jvm/java-11-openjdk-amd64/*
 +
-image::images/Picture23.png[Instalación de JDK]
+image::Picture23.png[Instalación de JDK]
 
 ### Git
 * btn:[Añadir Git] 
@@ -501,7 +552,7 @@ sudo apt-get install git
 * Marcar *Instalar automáticamente*
 * Version: *1.10.12*
 
-image::images/Picture24.png[Instalación de Ant]
+image::Picture24.png[Instalación de Ant]
 
 ### Maven
 * btn:[Instalaciones de Maven...] / btn:[Añadir Maven] 
@@ -509,7 +560,7 @@ image::images/Picture24.png[Instalación de Ant]
 * Marcar *Instalar automáticamente*
 * Version: *la última versión disponible*
 
-image::images/Picture25.png[Instalación de Maven]
+image::Picture25.png[Instalación de Maven]
 
 [NOTE]
 ====
@@ -530,28 +581,28 @@ La pestaña *Todos los plugins* (_Available_) muestra la lista de todos los plug
 
 * Maven integration plugin
 +
-image::images/Picture26.png[Maven plugin]
+image::Picture26.png[Maven plugin]
 
 * Cobertura plugin
 +
-image::images/Picture27.png[Cobertura plugin]
+image::Picture27.png[Cobertura plugin]
 
 * JaCoCo (Java Code Coverage)
 +
-image::images/Picture28.png[JaCoCo plugin]
+image::Picture28.png[JaCoCo plugin]
 
 * GitLab 
 +
-image::images/Picture29.png[GitLab plugin]
+image::Picture29.png[GitLab plugin]
 
 * SonarQube
 +
-image::images/Picture32.png[Sonar plugin]
+image::Picture32.png[Sonar plugin]
 
 
 Tras ello, hacemos clic en *Descargar ahora e instalar después de reiniciar*. Y marcamos *Reiniciar Jenkins después de la instalación*
 
-image::images/Picture30.png[Descargar plugins]
+image::Picture30.png[Descargar plugins]
 
 
 
@@ -569,11 +620,11 @@ WARNING: Las siguientes secciones pueden estar desactualizadas. Si los pasos no 
 
 Si queréis usar vuestro propio GitLab con Jenkins, tendréis que hacer una configuración de GitLab indicando la URL y el API Token. El API Token es un valor ligado al usuario de GitLab disponible en *User Settings* / *Account*:
 
-image::images/gitlab-token.png[GitLab token]
+image::gitlab-token.png[GitLab token]
 
 A continuación, en Jenkins, introducimos la configuración del servidor Gitlab: *Administrar Jenkins* / *Configurar sistema*. Al  final de la página encontrarás la sección de GitLab.
 
-image::images/Picture31.png[Gitlab Configuration]
+image::Picture31.png[Gitlab Configuration]
 
 * Nombre de la conexión: _mi gitlab_
 * Gitlab Host URL: http://_mi_IP_gitlab_
@@ -583,11 +634,11 @@ image::images/Picture31.png[Gitlab Configuration]
 ** ID: _mi-gitlab_
 ** Descripción: _token de mi gitlab_
 +
-image::images/gitlab-api-token-credential.png[Credencial GitLab API token]
+image::gitlab-api-token-credential.png[Credencial GitLab API token]
 +
 Tras ello seleccionamos la credencial:
 
-image::images/gitlab-api-token-ok.png[Credencial GitLab API token]
+image::gitlab-api-token-ok.png[Credencial GitLab API token]
 
 En un proximo tutorial veremos como usar un repositorio GitLab en un proyecto Jenkins.
 
@@ -598,7 +649,7 @@ SonarQube es una plataforma de calidad de código fuente. SonarQube proporciona 
 Primero hemos de instalar el plugin de Sonar y luego configurarlo.
 * Instalación del plugin *SonarQube Scanner for Jenkins*
 
-image::images/Picture32.png[SonarQube plugin]
+image::Picture32.png[SonarQube plugin]
 
 A continuación, *Administrar Jenkins* / *Global Tool Configuration*.
 Descender en la página a la sección de configuración *SonarQube Scanner*, y:
@@ -608,7 +659,7 @@ Descender en la página a la sección de configuración *SonarQube Scanner*, y:
 * Nombre: *SonarQube scanner 3.x.x*
 * Version: _la última disponible_
 
-image::images/Picture33.png[Configuración de SonarQube scanner tool]
+image::Picture33.png[Configuración de SonarQube scanner tool]
 
 Se debe crear un token de autenticación desde el servidor SonarQube, creado como una credencial 'Secret Text'. Si aun no dispone de un servidor SonarQube, déjelo en blanco.
 
@@ -622,13 +673,13 @@ Más info: https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scan
 
 Si al iniciar Jenkins como administradores nos aparece un mensaje indicando que una nueva versión de Jenkins está disponible, es *aconsejable actualizar siempre*. 
 
-image::images/new-version.png[Disponible nueva version de Jenkins]
+image::new-version.png[Disponible nueva version de Jenkins]
 
 Para ello:
 
 * Administrar Jenkins / Prepare for Shutdown
 
-image::images/prepare-for-shutdown.png[Prepare for shutdown...]
+image::prepare-for-shutdown.png[Prepare for shutdown...]
 
 * Desde la consola ssh: 
 +
@@ -642,15 +693,15 @@ sudo apt-get upgrade -y
 
 El enlace para gestionar los plugins nos muestra si hay actualizaciones disponibles. Es recomendable actualizar siempre:
 
-image::images/manage-plugins-update.png[Actualizaciones de plugins disponibles]
+image::manage-plugins-update.png[Actualizaciones de plugins disponibles]
 
 Entramos y marcamos todos con _All_ , y hacemos clic en _Descargar ahora e instalar después de reiniciar_
 
-image::images/plugins-update-all.png[Actualizar todos los plugins]
+image::plugins-update-all.png[Actualizar todos los plugins]
 
 Tras ello, marcamos _Reiniciar Jenkins..._
 
-image::images/plugins-restart.png[Reiniciar Jenkins...]
+image::plugins-restart.png[Reiniciar Jenkins...]
 :numbered!:
 
 # Bibliografía
