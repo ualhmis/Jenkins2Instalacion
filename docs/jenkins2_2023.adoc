@@ -471,6 +471,11 @@ Más info en https://wiki.jenkins-ci.org/display/JENKINS/Securing+Jenkins[Securi
 
 Podemos registrar nuevos usuarios mediante el formulario de registro de la página inicial (no estando logueados). Cada miembro del equipo debe registrarse como usuario. Mediante el usuario administrador damos permisos a los nuevos usuarios registrados. 
 
+[WARNING]
+====
+Una vez creadas las cuentas de todos los usuarios es recomendable desactivar la opción de registro de usuarios. Para ello, en *Administrar Jenkins* / *Configuración global de seguridad*, desmarcamos *Permitir que los usuarios se registren*.
+====
+
 .Control de acceso con LDAP
 [NOTE]
 ====
@@ -643,6 +648,9 @@ image::gitlab-api-token-ok.png[Credencial GitLab API token]
 En un proximo tutorial veremos como usar un repositorio GitLab en un proyecto Jenkins.
 
 ### Configuración de SonarQube
+
+[WARNING]
+Esta sección está desactualizada. Busca en internet ayuda para realizar la configuración de SonarQube indicada.
 
 SonarQube es una plataforma de calidad de código fuente. SonarQube proporciona diversas herramientas de análisis estático de código fuente como Checkstyle, PMD o FindBugs para obtener métricas que pueden ayudar a mejorar la calidad del código de un programa.
 

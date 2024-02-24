@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 2.0.17">
+<meta name="generator" content="Asciidoctor 2.0.18">
 <meta name="keywords" content="Jenkins">
 <meta name="author" content="Herramientas y Métodos de Ingeniería del Software">
 <title>Instalación de Jenkins en Ubuntu 22.04, 20.04, 18.04 LTS con Certbot SSL</title>
@@ -86,10 +86,10 @@ code{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;
 ul,ol,dl{line-height:1.6;margin-bottom:1.25em;list-style-position:outside;font-family:inherit}
 ul,ol{margin-left:1.5em}
 ul li ul,ul li ol{margin-left:1.25em;margin-bottom:0}
-ul.square li ul,ul.circle li ul,ul.disc li ul{list-style:inherit}
-ul.square{list-style-type:square}
 ul.circle{list-style-type:circle}
 ul.disc{list-style-type:disc}
+ul.square{list-style-type:square}
+ul.circle ul:not([class]),ul.disc ul:not([class]),ul.square ul:not([class]){list-style:inherit}
 ol li ul,ol li ol{margin-left:1.25em;margin-bottom:0}
 dl dt{margin-bottom:.3125em;font-weight:bold}
 dl dd{margin-bottom:1.25em}
@@ -1204,6 +1204,20 @@ sudo service nginx restart</code></pre>
 <div class="paragraph">
 <p>Podemos registrar nuevos usuarios mediante el formulario de registro de la página inicial (no estando logueados). Cada miembro del equipo debe registrarse como usuario. Mediante el usuario administrador damos permisos a los nuevos usuarios registrados.</p>
 </div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Una vez creadas las cuentas de todos los usuarios es recomendable desactivar la opción de registro de usuarios. Para ello, en <strong>Administrar Jenkins</strong> / <strong>Configuración global de seguridad</strong>, desmarcamos <strong>Permitir que los usuarios se registren</strong>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -1617,6 +1631,18 @@ Las siguientes secciones pueden estar desactualizadas. Si los pasos no son exact
 </div>
 <div class="sect2">
 <h3 id="_configuración_de_sonarqube">12.2. Configuración de SonarQube</h3>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Esta sección está desactualizada. Busca en internet ayuda para realizar la configuración de SonarQube indicada.
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>SonarQube es una plataforma de calidad de código fuente. SonarQube proporciona diversas herramientas de análisis estático de código fuente como Checkstyle, PMD o FindBugs para obtener métricas que pueden ayudar a mejorar la calidad del código de un programa.</p>
 </div>
