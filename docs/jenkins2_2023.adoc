@@ -548,9 +548,9 @@ sudo apt-get install git
 
 ### Ant
 * btn:[Instalaciones de Ant...] / btn:[Añadir Ant] 
-* Nombre: *ant 1.10.12*
+* Nombre: *ant 1.10.14*
 * Marcar *Instalar automáticamente*
-* Version: *1.10.12*
+* Version: *1.10.14*
 
 image::Picture24.png[Instalación de Ant]
 
