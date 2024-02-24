@@ -7,7 +7,7 @@
 <meta name="generator" content="Asciidoctor 2.0.18">
 <meta name="keywords" content="Jenkins">
 <meta name="author" content="Herramientas y Métodos de Ingeniería del Software">
-<title>Instalación de Jenkins en Ubuntu 20.04, 18.04 LTS con Certbot SSL</title>
+<title>Instalación de Jenkins en Ubuntu 22.04, 20.04, 18.04 LTS con Certbot SSL</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -441,11 +441,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="book toc2 toc-right doc">
 <div id="header">
-<h1>Instalación de Jenkins en Ubuntu 20.04, 18.04 LTS con Certbot SSL</h1>
+<h1>Instalación de Jenkins en Ubuntu 22.04, 20.04, 18.04 LTS con Certbot SSL</h1>
 <div class="details">
 <span id="author" class="author">Herramientas y Métodos de Ingeniería del Software</span><br>
-<span id="revnumber">version 2.0,</span>
-<span id="revdate">Marzo-2023</span>
+<span id="revnumber">version 3.0,</span>
+<span id="revdate">Febrero-2024</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Tabla de contenidos</div>
@@ -461,7 +461,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 </ul>
 </li>
-<li><a href="#_instalación_de_jenkins_2">Instalación de Jenkins 2</a>
+<li><a href="#_instalación_de_jenkins">Instalación de Jenkins</a>
 <ul class="sectlevel1">
 <li><a href="#_instalación_de_jenkins_mediante_paquetes">4. Instalación de Jenkins mediante paquetes</a></li>
 <li><a href="#_instalación_de_nginx_como_proxy_inverso">5. Instalación de Nginx como Proxy Inverso</a></li>
@@ -519,7 +519,7 @@ Tutorial de instalación de Jenkins en Ubuntu 20.04, 18.04 LTS con Certbot SSL.
 <div class="title">Objetivos</div>
 <ul>
 <li>
-<p>Actualizar el sistema Ubuntu 20.04, 18.04 en caso de que sea necesario</p>
+<p>Actualizar el sistema Ubuntu 22.04, 20.04, 18.04 en caso de que sea necesario</p>
 </li>
 <li>
 <p>Instalar Jenkins (última versión)</p>
@@ -571,6 +571,7 @@ ejecutar</p>
 <div class="content">
 <img src="images/Picture1.png" alt="Reiniciar el sistema">
 </div>
+<div class="title">Fig. 1. Reiniciar el sistema</div>
 </div>
 </div>
 </div>
@@ -578,15 +579,15 @@ ejecutar</p>
 <h2 id="_instalar_java">3. Instalar Java</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Puede instalar el JDK con el siguiente comando, es importante instalar al menos la versión 1.8 del JDK, si no Jenkins no funcionará. Aunque ya recomienda usar <a href="https://www.jenkins.io/doc/administration/requirements/upgrade-java-guidelines/" target="_blank" rel="noopener">Java 11</a></p>
+<p>Puede instalar el JDK con el siguiente comando, es importante instalar al menos la versión 1.8 del JDK, si no Jenkins no funcionará. Aunque ya recomienda usar <a href="https://www.jenkins.io/doc/administration/requirements/upgrade-java-guidelines/" target="_blank" rel="noopener">Java 17</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">sudo apt install openjdk-11-jdk -y</code></pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">sudo apt install openjdk-17-jdk -y</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Primero comprobaremos si la versión activa de Java es la 11.</p>
+<p>Primero comprobaremos si la versión activa de Java es la 17.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -595,7 +596,7 @@ ejecutar</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/java-version-11.png" alt="java -version">
+<img src="images/java-version-17.png" alt="java -version">
 </div>
 </div>
 <div class="paragraph">
@@ -608,7 +609,7 @@ ejecutar</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/java-alternatives-11.png" alt="java -alternatives">
+<img src="images/java-alternatives-17.png" alt="java -alternatives">
 </div>
 </div>
 <div class="sect2">
@@ -623,7 +624,7 @@ ejecutar</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-conf" data-lang="conf">JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64"</code></pre>
+<pre class="highlight"><code class="language-conf" data-lang="conf">JAVA_HOME="/usr/lib/jvm/java-17-openjdk-amd64"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -647,18 +648,18 @@ ejecutar</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>/usr/lib/jvm/java-11-openjdk-amd64</pre>
+<pre>/usr/lib/jvm/java-17-openjdk-amd64</pre>
 </div>
 </div>
 </div>
 </div>
 </div>
-<h1 id="_instalación_de_jenkins_2" class="sect0">Instalación de Jenkins 2</h1>
+<h1 id="_instalación_de_jenkins" class="sect0">Instalación de Jenkins</h1>
 <div class="sect1">
 <h2 id="_instalación_de_jenkins_mediante_paquetes">4. Instalación de Jenkins mediante paquetes</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Instalaremos Jenkins en un sistema operativo basado en Ubuntu 18.04 LTS o 20.04 LTS. La instalación consiste en añadir los repositorios de Jenkins, actualizar nuestro sistema de repositorios y una vez acabado, instalar Jenkins.</p>
+<p>Instalaremos Jenkins en un sistema operativo basado en Ubuntu 22.04 LTS, 20.04 LTS o 18.04 LTS. La instalación consiste en añadir los repositorios de Jenkins, actualizar nuestro sistema de repositorios y una vez acabado, instalar Jenkins.</p>
 </div>
 <div class="admonitionblock important">
 <table>
@@ -680,18 +681,60 @@ Como prerrequisito es necesario tener instalado Java. Compruebe que está config
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
-
-sudo sh -c 'echo deb https://pkg.jenkins.io/debian-stable binary/ &gt; \
-    /etc/apt/sources.list.d/jenkins.list'
-
-sudo apt-get update -y
-
-sudo apt-get install jenkins -y</code></pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">sudo wget -O /usr/share/keyrings/jenkins-keyring.asc \
+    https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
+    https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
+    /etc/apt/sources.list.d/jenkins.list &gt; /dev/null</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>A continuación, levantamos el servicio:</p>
+<p>Actualiza e instala.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">sudo apt-get update -y</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">sudo apt-get install jenkins -y</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>En caso de que no se pueda instalar Jenkins, revise si el comando ha sido actualizado en los pasos de <a href="https://www.jenkins.io/doc/book/installing/linux/#debianubuntu">instalación de Jenkins en Ubuntu</a>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>A continuación, comprueba el estado del servicio:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">sudo systemctl status jenkins</code></pre>
+</div>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="images/estado-servicio-jenkins.png" alt="estado servicio jenkins" width="100%">
+</div>
+<div class="title">Fig. 2. Estado del servicio Jenkins</div>
+</div>
+<div class="paragraph">
+<p>En caso de que no esté activo, levantamos el servicio:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -707,7 +750,7 @@ sudo apt-get install jenkins -y</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Si todo salió bien, la primera parte del resultado de estado mostrará que el servicio está <strong>activo</strong>.</p>
+<p>Si todo salió bien, mostrará que el servicio está <strong>activo</strong>.</p>
 </div>
 <div class="paragraph">
 <p>Y comprobamos también que Jenkins está funcionando en el puerto 8080</p>
@@ -721,6 +764,7 @@ sudo apt-get install jenkins -y</code></pre>
 <div class="content">
 <img src="images/Picture4.png" alt="Listado puertos activos">
 </div>
+<div class="title">Fig. 3. Listado puertos activos</div>
 </div>
 <div class="paragraph">
 <p>Una vez realizada la instalación por defecto Jenkins estará escuchando en el puerto 8080. Podemos comprobarlo:</p>
@@ -734,9 +778,10 @@ sudo apt-get install jenkins -y</code></pre>
 <div class="content">
 <img src="images/Picture5.png" alt="Respuesta de Jenkins en el 8080">
 </div>
+<div class="title">Fig. 4. Respuesta de Jenkins en el 8080</div>
 </div>
 <div class="paragraph">
-<p>Necesitamos instalar un Apache o Nginx en modo <strong>Reverse Proxy</strong> para poder acceder a la administración de Jenkins mediante el puerto 80 (HTTP).</p>
+<p>Jenkins se está ejecutando en el puerto 8080. Necesitamos instalar un Apache o Nginx en modo <strong>Reverse Proxy</strong> para poder acceder a la administración de Jenkins mediante el puerto 80 (HTTP).</p>
 </div>
 </div>
 </div>
@@ -748,24 +793,15 @@ sudo apt-get install jenkins -y</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">sudo apt install nginx</code></pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">sudo apt install nginx -y</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Comprobamos que Nginx está funcionando en el puerto 80:</p>
+<p>Comprobamos que Nginx está funcionando en el puerto 80: abre el navegador, introduce la dirección IP de tu máquina virtual y verás la página de bienvenida de Nginx.</p>
 </div>
 <div class="imageblock">
 <div class="content">
 <img src="images/nginx-home.png" alt="Nginx homepage">
-</div>
-</div>
-<div class="paragraph">
-<p>A continuación, eliminamos la configuración predeterminada:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">sudo rm -rf /etc/nginx/sites-available/default
-sudo rm -rf /etc/nginx/sites-enabled/default</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -834,6 +870,39 @@ Se recomienda copiar el texto y editarlo en local con Notepad++ o cualquier otro
 </table>
 </div>
 <div class="paragraph">
+<p>Tenemos que configurar Nginx para que use el archivo de configuración que acabamos de crear, así que eliminamos la configuración predeterminada:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">sudo rm -rf /etc/nginx/sites-available/default</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">sudo rm -rf /etc/nginx/sites-enabled/default</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A continuación, creamos un enlace simbólico `default`a la nueva configuración de Nginx:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">sudo ln -s /etc/nginx/sites-available/JENKINS.MACHINE.DNS /etc/nginx/sites-enabled/default</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Recuerda sustituir <code>JENKINS.MACHINE.DNS</code> por el DNS de la máquina virtual en Azure.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
 <p>Para que Jenkins trabaje con Nginx, necesitamos hacer que Jenkins escuche en <code>localhost</code>. Para ello, editamos el archivo <code>/etc/default/jenkins</code></p>
 </div>
 <div class="listingblock">
@@ -879,8 +948,9 @@ sudo service nginx restart</code></pre>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/Picture8.png" alt="Listado de puertos activos 80 y 8080">
+<img src="images/Picture8.png" alt="Listado de puertos activos: 80 y 8080">
 </div>
+<div class="title">Fig. 5. Listado de puertos activos: 80 y 8080</div>
 </div>
 </div>
 </div>
@@ -892,11 +962,11 @@ sudo service nginx restart</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">sudo apt-get install python3-certbot-nginx</code></pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">sudo apt-get install python3-certbot-nginx -y</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Ahora que has instalado Certbot by Let’s Encrypt para Ubuntu 20.04, ejecuta el siguiente comando para recibir tus certificados:</p>
+<p>Ahora que has instalado Certbot by Let’s Encrypt para Ubuntu, ejecuta el siguiente comando para recibir tus certificados:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -904,10 +974,19 @@ sudo service nginx restart</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Introduce un correo electrónico y acepta los términos y condiciones, luego recibirás la lista de dominios que necesita para generar el certificado SSL. Para seleccionar todos los dominios simplemente presione Enter.</p>
+<p>Introduce un correo electrónico y acepta los términos y condiciones (Y), no compartas tu email (N), luego recibirás la lista de dominios que necesita para generar el certificado SSL. Para seleccionar todos los dominios simplemente presiona Enter para dejar en blanco.</p>
 </div>
 <div class="paragraph">
-<p>El cliente de Certbot generará automáticamente el nuevo certificado para tu dominio. Ahora necesitamos actualizar la configuración de Nginx.</p>
+<p>El cliente de Certbot generará automáticamente el nuevo certificado para tu dominio.</p>
+</div>
+<div class="imageblock text-center thumb">
+<div class="content">
+<img src="images/certificados-generados-ok.png" alt="certificados generados ok" width="100%">
+</div>
+<div class="title">Fig. 6. Certificados generados correctamente</div>
+</div>
+<div class="paragraph">
+<p>Ahora necesitamos actualizar la configuración de Nginx.</p>
 </div>
 <div class="paragraph">
 <p>Una vez que se instala SSL, puede configurarlo en su archivo Nginx.</p>
@@ -917,25 +996,28 @@ sudo service nginx restart</code></pre>
 <pre class="highlight"><code class="language-bash" data-lang="bash">sudo nano /etc/nginx/sites-available/JENKINS.MACHINE.DNS</code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>Borra todo el contenido y añade el siguiente:</p>
+</div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-conf" data-lang="conf">server {
      listen [::]:80;
      listen 80;
 
-     server_name JENKINS.MACHINE.DNS;
+     server_name JENKINS.MACHINE.DNS; <i class="conum" data-value="1"></i><b>(1)</b>
 
-     return 301 https://JENKINS.MACHINE.DNS$request_uri;
+     return 301 https://JENKINS.MACHINE.DNS$request_uri; <i class="conum" data-value="1"></i><b>(1)</b>
  }
 
  server {
      listen [::]:443 ssl;
      listen 443 ssl;
 
-     server_name JENKINS.MACHINE.DNS;
+     server_name JENKINS.MACHINE.DNS; <i class="conum" data-value="1"></i><b>(1)</b>
 
-     ssl_certificate /etc/letsencrypt/live/JENKINS.MACHINE.DNS/fullchain.pem;
-     ssl_certificate_key /etc/letsencrypt/live/JENKINS.MACHINE.DNS/privkey.pem;
+     ssl_certificate /etc/letsencrypt/live/JENKINS.MACHINE.DNS/fullchain.pem; <i class="conum" data-value="1"></i><b>(1)</b>
+     ssl_certificate_key /etc/letsencrypt/live/JENKINS.MACHINE.DNS/privkey.pem; <i class="conum" data-value="1"></i><b>(1)</b>
 
      location / {
          proxy_set_header        Host $host:$server_port;
@@ -944,14 +1026,22 @@ sudo service nginx restart</code></pre>
          proxy_set_header        X-Forwarded-Proto $scheme;
          proxy_pass          http://127.0.0.1:8080;
          proxy_read_timeout  90;
-         proxy_redirect      http://127.0.0.1:8080 https://JENKINS.MACHINE.DNS;
+         proxy_redirect      http://127.0.0.1:8080 https://JENKINS.MACHINE.DNS; <i class="conum" data-value="1"></i><b>(1)</b>
 
          proxy_http_version 1.1;
          proxy_request_buffering off;
-         add_header 'X-SSH-Endpoint' 'JENKINS.MACHINE.DNS:50022' always;
+         add_header 'X-SSH-Endpoint' 'JENKINS.MACHINE.DNS:50022' always; <i class="conum" data-value="1"></i><b>(1)</b>
      }
  }</code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Recuerda sustituir <code>JENKINS.MACHINE.DNS</code> por el DNS de la máquina virtual en Azure donde has instalado Jenkins.</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>De nuevo, comprueba la configuración y reinicia Nginx para que los cambios tengan efecto:</p>
@@ -975,14 +1065,15 @@ sudo service nginx restart</code></pre>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/ssl-ok.png" alt="Listado de puertos activos 80" width="443y 8080">
+<img src="images/ssl-ok.png" alt="Listado de puertos activos 80" width="443 y 8080">
 </div>
+<div class="title">Fig. 7. Listado de puertos activos 80, 443 y 8080</div>
 </div>
 <div class="paragraph">
 <p><strong>Renovación del certificado SSL</strong></p>
 </div>
 <div class="paragraph">
-<p>Los certificados que proporciona  Let’s Encrypt son válidos solo por 90 días, por lo que debes renovarlos con frecuencia. A continuación, vamos a configurar un cronjob para verificar si el certificado vencerá en los próximos 30 días y renovarlo automáticamente.</p>
+<p>Los certificados que proporciona  Let’s Encrypt son válidos solo por <strong>90 días</strong>, por lo que deberás renovarlos al menos una vez durante el curso. A continuación, vamos a configurar un <code>cronjob</code> para verificar si el certificado vencerá en los próximos 30 días y renovarlo automáticamente.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -998,7 +1089,7 @@ sudo service nginx restart</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Renueva el certificado a las 0h del dia 1 de cada mes.</p>
+<p>Eso consigue que se renueve el certificado a las 0h del dia 1 de cada mes.</p>
 </div>
 <div class="paragraph">
 <p>Eso es todo, ahora puedes visitar su nombre de dominio en el navegador web. Puedes ver la página de Jenkins con HTTPS.</p>
@@ -1064,6 +1155,7 @@ sudo service nginx restart</code></pre>
 <div class="content">
 <img src="images/Picture14.png" alt="Bienvenido a Jenkins">
 </div>
+<div class="title">Fig. 8. Bienvenido a Jenkins</div>
 </div>
 </div>
 </div>
@@ -1071,15 +1163,25 @@ sudo service nginx restart</code></pre>
 <h2 id="_securizando_jenkins">8. Securizando Jenkins</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Las versiones anteriores de Jenkins (v1.x) se instalaban sin ningún tipo de control de acceso para los usuarios. Esto implicaba que cualquier usuario podía usar la aplicación, lo que era totalmente desaconsejable. Por ello, lo primero era activar la seguridad. La versión actual (v2.x) crea un usuario Admin con el que hemos hecho el primer acceso, pero, en cualquier caso, sigue siendo necesario configurar la seguridad para poder gestionar el acceso a nuevos usuarios. Para ello, hacemos clic en <strong>Administrar Jenkins</strong> / <strong>Configuración global de seguridad</strong>.</p>
+<p>Las versiones anteriores de Jenkins (v1.x) se instalaban sin ningún tipo de control de acceso para los usuarios. Esto implicaba que cualquier usuario podía usar la aplicación, lo que era totalmente desaconsejable. Por ello, lo primero era activar la seguridad. La versión actual (v2.x) activa la autenticación de forma predeterminada, creando un usuario Admin con el que hemos hecho el primer acceso. Pero sigue siendo necesario configurar la seguridad para poder gestionar el acceso a nuevos usuarios. Para ello, hacemos clic en <strong>Administrar Jenkins</strong> / <strong>Security</strong>.</p>
 </div>
 <div class="paragraph">
-<p>Jenkins permite diversos <strong>modos de acceso</strong>. Vamos a configurar el más básico que es el de <strong>Usar base de datos de Jenkins</strong>, y marcamos <strong>Permitir que los usuarios se registren</strong>. A continuación, en la sección <strong>Autorización</strong>, marcamos <strong>Configuración de seguridad</strong>. En el campo de texto debemos escribir el nombre del usuario admin con el que hemos accedido, y a continuación hacer clic en el botón <b class="button">Añadir</b>. Tras ello, debemos marcarlo como <strong>Administer</strong>. Y por último <b class="button">Guardar</b></p>
+<p>Jenkins permite diversos <strong>modos de acceso</strong>. Vamos a configurar el más básico que es el de <strong>Usar base de datos de Jenkins</strong>, y marcamos <strong>Permitir que los usuarios se registren</strong>.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/security-permitir-usuarios-se-registren.png" alt="Permitir que los usuarios se registren">
+</div>
+<div class="title">Fig. 9. Permitir que los usuarios se registren</div>
+</div>
+<div class="paragraph">
+<p>Justo abajo, en la sección <strong>Autorización</strong>, marcamos <strong>Configuración de seguridad</strong>. En el campo de texto debemos escribir el nombre del usuario admin con el que hemos accedido, y a continuación hacer clic en el botón <b class="button">Añadir</b>. Tras ello, debemos marcarlo como <strong>Administer</strong>. Y por último <b class="button">Guardar</b></p>
 </div>
 <div class="imageblock">
 <div class="content">
 <img src="images/Picture16.png" alt="Autorización. Configuración de seguridad">
 </div>
+<div class="title">Fig. 10. Autorización. Configuración de seguridad. Añadir al usuario <code>Administer</code></div>
 </div>
 <div class="admonitionblock warning">
 <table>
@@ -1090,7 +1192,7 @@ sudo service nginx restart</code></pre>
 <td class="content">
 <div class="title">Qué hacer si nos hemos bloqueado y no podemos acceder</div>
 <div class="paragraph">
-<p>En caso de emergencia, si olvidamos la contraseña o no podemos acceder a Jenkins, debemos seguir las instrucciones definidas aquí: <a href="https://wiki.jenkins-ci.org/display/JENKINS/Disable+security">Help! I locked myself out!</a>.</p>
+<p>En caso de emergencia, si olvidamos la contraseña o no podemos acceder a Jenkins, debemos seguir las instrucciones definidas aquí: <a href="https://www.jenkins.io/doc/book/security/access-control/disable/">Help! I locked myself out!. Disable Access Control</a>.</p>
 </div>
 <div class="paragraph">
 <p>Más info en <a href="https://wiki.jenkins-ci.org/display/JENKINS/Securing+Jenkins">Securing Jenkins</a></p>
@@ -1176,7 +1278,7 @@ sudo service nginx restart</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Entramos en la configuración del nuevo proyecto. Seleccionamos la pestaña <strong>Ejecutar</strong></p>
+<p>Entramos en la configuración del nuevo proyecto. Seleccionamos la sección  <strong>Build steps</strong></p>
 </div>
 <div class="ulist">
 <ul>
@@ -1201,8 +1303,9 @@ sudo service nginx restart</code></pre>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/Picture19.png" alt="Configuración proyecto básico">
+<img src="images/new-job-prueba-ejecutar-shell.png" alt="Configuración proyecto básico">
 </div>
+<div class="title">Fig. 11. Configuración proyecto básico</div>
 </div>
 <div class="paragraph">
 <p>Tras ello hacemos clic en <strong>Construir ahora</strong> (<em>Build now</em>)</p>
@@ -1302,13 +1405,13 @@ sudo service nginx restart</code></pre>
 <p><b class="button">Instalaciones de Ant&#8230;&#8203;</b> / <b class="button">Añadir Ant</b></p>
 </li>
 <li>
-<p>Nombre: <strong>ant 1.10.12</strong></p>
+<p>Nombre: <strong>ant 1.10.14</strong></p>
 </li>
 <li>
 <p>Marcar <strong>Instalar automáticamente</strong></p>
 </li>
 <li>
-<p>Version: <strong>1.10.12</strong></p>
+<p>Version: <strong>1.10.14</strong></p>
 </li>
 </ul>
 </div>
@@ -1688,8 +1791,8 @@ sudo apt-get upgrade -y</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 2.0<br>
-Last updated 2023-05-23 12:37:43 +0200
+Version 3.0<br>
+Last updated 2024-02-24 19:23:10 +0100
 </div>
 </div>
 <style>
