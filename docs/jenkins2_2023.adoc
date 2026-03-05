@@ -612,7 +612,7 @@ image::sonarqube-plugin.png[SonarQube plugin]
 
 Tras ello, hacemos clic en *Instalar*. Y marcamos *Reiniciar Jenkins después de la instalación*
 
-image::reiniciar-jenkins-tras-plugins.png.png[Descargar plugins]
+image::reiniciar-jenkins-tras-plugins.png[Descargar plugins]
 
 
 
@@ -659,26 +659,24 @@ Esta sección está desactualizada. Busca en internet ayuda para realizar la con
 
 SonarQube es una plataforma de calidad de código fuente. SonarQube proporciona diversas herramientas de análisis estático de código fuente como Checkstyle, PMD o FindBugs para obtener métricas que pueden ayudar a mejorar la calidad del código de un programa.
 
-Primero hemos de instalar el plugin de Sonar y luego configurarlo.
-* Instalación del plugin *SonarQube Scanner for Jenkins*
+Primero hemos instalado el plugin de SonarQube. Vamos a configurarlo.
 
-image::Picture32.png[SonarQube plugin]
-
-A continuación, *Administrar Jenkins* / *Global Tool Configuration*.
-Descender en la página a la sección de configuración *SonarQube Scanner*, y:
+A continuación, *Administrar Jenkins* / *Tools*.
+Descender en la página a la sección de configuración *Instalaciones de SonarQube Scanner*, y:
 
 * Hacer clic *Añadir SonarQube Scanner*
+* Nombre: *SonarQube Scanner*
 * Seleccionar *Instalar Automáticamente*
-* Nombre: *SonarQube scanner 3.x.x*
+* Nombre: *SonarQube scanner 8.x.x*
 * Version: _la última disponible_
 
-image::Picture33.png[Configuración de SonarQube scanner tool]
+image::sonarqube-scanner-tool.png[Configuración de SonarQube scanner tool]
 
 Se debe crear un token de autenticación desde el servidor SonarQube, creado como una credencial 'Secret Text'. Si aun no dispone de un servidor SonarQube, déjelo en blanco.
 
 Por último guardar la configuración.
 
-Más info: https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner+for+Jenkins[SonarQube Scanner for Jenkins]
+Más info: https://docs.sonarsource.com/sonarqube-server/9.9/analyzing-source-code/scanners/jenkins-extension-sonarqube[Jenkins extension for SonarQube]
 
 
 ## Actualización
