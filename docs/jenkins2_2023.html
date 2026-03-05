@@ -1648,17 +1648,11 @@ Esta sección está desactualizada. Busca en internet ayuda para realizar la con
 <p>SonarQube es una plataforma de calidad de código fuente. SonarQube proporciona diversas herramientas de análisis estático de código fuente como Checkstyle, PMD o FindBugs para obtener métricas que pueden ayudar a mejorar la calidad del código de un programa.</p>
 </div>
 <div class="paragraph">
-<p>Primero hemos de instalar el plugin de Sonar y luego configurarlo.
-* Instalación del plugin <strong>SonarQube Scanner for Jenkins</strong></p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/Picture32.png" alt="SonarQube plugin">
-</div>
+<p>Primero hemos instalado el plugin de SonarQube. Vamos a configurarlo.</p>
 </div>
 <div class="paragraph">
-<p>A continuación, <strong>Administrar Jenkins</strong> / <strong>Global Tool Configuration</strong>.
-Descender en la página a la sección de configuración <strong>SonarQube Scanner</strong>, y:</p>
+<p>A continuación, <strong>Administrar Jenkins</strong> / <strong>Tools</strong>.
+Descender en la página a la sección de configuración <strong>Instalaciones de SonarQube Scanner</strong>, y:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1666,10 +1660,13 @@ Descender en la página a la sección de configuración <strong>SonarQube Scanne
 <p>Hacer clic <strong>Añadir SonarQube Scanner</strong></p>
 </li>
 <li>
+<p>Nombre: <strong>SonarQube Scanner</strong></p>
+</li>
+<li>
 <p>Seleccionar <strong>Instalar Automáticamente</strong></p>
 </li>
 <li>
-<p>Nombre: <strong>SonarQube scanner 3.x.x</strong></p>
+<p>Nombre: <strong>SonarQube scanner 8.x.x</strong></p>
 </li>
 <li>
 <p>Version: <em>la última disponible</em></p>
@@ -1678,7 +1675,7 @@ Descender en la página a la sección de configuración <strong>SonarQube Scanne
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/Picture33.png" alt="Configuración de SonarQube scanner tool">
+<img src="images/sonarqube-scanner-tool.png" alt="Configuración de SonarQube scanner tool">
 </div>
 </div>
 <div class="paragraph">
@@ -1688,7 +1685,7 @@ Descender en la página a la sección de configuración <strong>SonarQube Scanne
 <p>Por último guardar la configuración.</p>
 </div>
 <div class="paragraph">
-<p>Más info: <a href="https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner+for+Jenkins">SonarQube Scanner for Jenkins</a></p>
+<p>Más info: <a href="https://docs.sonarsource.com/sonarqube-server/9.9/analyzing-source-code/scanners/jenkins-extension-sonarqube">Jenkins extension for SonarQube</a></p>
 </div>
 </div>
 </div>
@@ -1793,7 +1790,7 @@ sudo apt-get upgrade -y</code></pre>
 <div id="footer">
 <div id="footer-text">
 Version 3.1<br>
-Last updated 2026-03-05 18:54:42 +0100
+Last updated 2026-03-05 19:07:05 +0100
 </div>
 </div>
 <style>
