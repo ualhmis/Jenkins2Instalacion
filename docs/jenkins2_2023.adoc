@@ -29,7 +29,7 @@ Nombre y título del trabajo
 ////
 = Instalación de Jenkins en Ubuntu 22.04, 20.04, 18.04 LTS con Certbot SSL
 Herramientas y Métodos de Ingeniería del Software
-Version 3.0, Febrero-2024
+Version 3.1, Marzo-2026
 Joaquín Cañadas <jjcanada@ual.es>
 
 
@@ -47,7 +47,7 @@ Tutorial de instalación de Jenkins en Ubuntu 20.04, 18.04 LTS con Certbot SSL.
 COLOCA A CONTINUACIÓN LOS OBJETIVOS
 ////
 .Objetivos
-* Actualizar el sistema Ubuntu 22.04, 20.04, 18.04 en caso de que sea necesario
+* Actualizar el sistema Ubuntu 24.04, 22.04, 20.04, 18.04 en caso de que sea necesario
 * Instalar Jenkins (última versión)
 * Configurar Nginx como proxy inverso
 * Instalar certificado SSL con Certbot
@@ -78,26 +78,26 @@ sudo reboot -h now
 ----
 
 .Reiniciar el sistema
-image::Picture1.png[Reiniciar el sistema]
+image::Picture1.png[Reiniciar el sistema, align="center", width=60%]
 
 
 ## Instalar Java
 
-Puede instalar el JDK con el siguiente comando, es importante instalar al menos la versión 1.8 del JDK, si no Jenkins no funcionará. Aunque ya recomienda usar https://www.jenkins.io/doc/administration/requirements/upgrade-java-guidelines/[Java 17,window=_blank]
+Puede instalar JDK con el siguiente comando, es importante instalar al menos la versión 1.8 del JDK, si no Jenkins no funcionará. Aunque ya recomienda usar https://www.jenkins.io/doc/book/installing/linux/[Java 21,window=_blank]
 
 [source,bash]
 ----
-sudo apt install openjdk-17-jdk -y
+sudo apt install openjdk-21-jdk -y
 ----
 
-Primero comprobaremos si la versión activa de Java es la 17.
+Primero comprobaremos si la versión activa de Java es la 21.
 
 [source,bash]
 ----
 java -version
 ----
 
-image::java-version-17.png[java -version]
+image::java-version-21.png[java -version]
 
 En caso contrario podemos comprobar si hay varias instalaciones de Java en el servidor y elegir la pertinente:
 
@@ -118,7 +118,7 @@ sudo nano /etc/environment
 Al final de este archivo, agregue la siguiente línea, asegurándose de sustituir la ruta resaltada con la  ruta de jdk en su sistema.
 
 [source,conf]
-JAVA_HOME="/usr/lib/jvm/java-17-openjdk-amd64"
+JAVA_HOME="/usr/lib/jvm/java-21-openjdk-amd64"
 
 Guarde, salga del archivo y vuelva a cargarlo.
 
@@ -134,30 +134,30 @@ echo $JAVA_HOME
 Esto devolverá la ruta que acaba de establecer.
 
 [listing]
-/usr/lib/jvm/java-17-openjdk-amd64
+/usr/lib/jvm/java-21-openjdk-amd64
 
 # Instalación de Jenkins
 
 ## Instalación de Jenkins mediante paquetes
 
-Instalaremos Jenkins en un sistema operativo basado en Ubuntu 22.04 LTS, 20.04 LTS o 18.04 LTS. La instalación consiste en añadir los repositorios de Jenkins, actualizar nuestro sistema de repositorios y una vez acabado, instalar Jenkins.
+Instalaremos Jenkins en un sistema operativo basado en Ubuntu 24.04 LTS, 22.04 LTS, 20.04 LTS o 18.04 LTS. La instalación consiste en añadir los repositorios de Jenkins, actualizar nuestro sistema de repositorios y una vez acabado, instalar Jenkins.
 
 IMPORTANT: Como prerrequisito es necesario tener instalado Java. Compruebe que está configurado JAVA_HOME
 
 Instalaremos Jenkins de la rama estable (versión Long-Term Support, LTS). Hay que tener en cuenta que esta versión de Jenkins se actualiza cada 12 semanas. Si queréis más información sobre la versión LTS de Jenkins, os dejo el enlace https://www.jenkins.io/download/lts/[aqui].
 
-Lo primero que haremos es añadir los repositorios de Jenkins e instalarlo mediante apt-get:
+Las https://www.jenkins.io/doc/book/installing/linux/#debian-stable[intrucciones oficiales]  Lo primero que haremos es añadir los repositorios de Jenkins e instalarlo mediante apt-get:
 
 [source,bash]
 ----
-sudo wget -O /usr/share/keyrings/jenkins-keyring.asc \
-    https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
+sudo wget -O /etc/apt/keyrings/jenkins-keyring.asc \
+  https://pkg.jenkins.io/debian-stable/jenkins.io-2026.key
 ----
 [source,bash]
 ----
-echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
-    https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
-    /etc/apt/sources.list.d/jenkins.list > /dev/null
+echo "deb [signed-by=/etc/apt/keyrings/jenkins-keyring.asc]" \
+  https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
+  /etc/apt/sources.list.d/jenkins.list > /dev/null
 ----
 Actualiza e instala.
 [source,bash]
@@ -534,8 +534,8 @@ image::Picture22.png[Global Tools Configuration]
 
 ### JDK
 * btn:[Añadir JDK] 
-* Nombre: *OpenJDK-11* 
-* JAVA_HOME: */usr/lib/jvm/java-11-openjdk-amd64/*
+* Nombre: *OpenJDK-21* 
+* JAVA_HOME: */usr/lib/jvm/java-21-openjdk-amd64/*
 +
 image::Picture23.png[Instalación de JDK]
 
@@ -588,13 +588,9 @@ La pestaña *Todos los plugins* (_Available_) muestra la lista de todos los plug
 +
 image::Picture26.png[Maven plugin]
 
-* Cobertura plugin
+* Coverage plugin
 +
-image::Picture27.png[Cobertura plugin]
-
-* JaCoCo (Java Code Coverage)
-+
-image::Picture28.png[JaCoCo plugin]
+image::coverage-plugin.png[Coverage plugin]
 
 * GitLab 
 +
@@ -602,12 +598,12 @@ image::Picture29.png[GitLab plugin]
 
 * SonarQube
 +
-image::Picture32.png[Sonar plugin]
+image::sonarqube-plugin.png[SonarQube plugin]
 
 
-Tras ello, hacemos clic en *Descargar ahora e instalar después de reiniciar*. Y marcamos *Reiniciar Jenkins después de la instalación*
+Tras ello, hacemos clic en *Instalar*. Y marcamos *Reiniciar Jenkins después de la instalación*
 
-image::Picture30.png[Descargar plugins]
+image::reiniciar-jenkins-tras-plugins.png.png[Descargar plugins]
 
 
 

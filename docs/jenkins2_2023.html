@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 2.0.18">
+<meta name="generator" content="Asciidoctor 2.0.22">
 <meta name="keywords" content="Jenkins">
 <meta name="author" content="Herramientas y Métodos de Ingeniería del Software">
 <title>Instalación de Jenkins en Ubuntu 22.04, 20.04, 18.04 LTS con Certbot SSL</title>
@@ -142,7 +142,7 @@ p a>code:hover{color:rgba(0,0,0,.9)}
 #content::before{content:none}
 #header>h1:first-child{color:rgba(0,0,0,.85);margin-top:2.25rem;margin-bottom:0}
 #header>h1:first-child+#toc{margin-top:8px;border-top:1px solid #dddddf}
-#header>h1:only-child,body.toc2 #header>h1:nth-last-child(2){border-bottom:1px solid #dddddf;padding-bottom:8px}
+#header>h1:only-child{border-bottom:1px solid #dddddf;padding-bottom:8px}
 #header .details{border-bottom:1px solid #dddddf;line-height:1.45;padding-top:.25em;padding-bottom:.25em;padding-left:.25em;color:rgba(0,0,0,.6);display:flex;flex-flow:row wrap}
 #header .details span:first-child{margin-left:-.125em}
 #header .details span.email a{color:rgba(0,0,0,.85)}
@@ -164,6 +164,7 @@ p a>code:hover{color:rgba(0,0,0,.9)}
 #toctitle{color:#7a2518;font-size:1.2em}
 @media screen and (min-width:768px){#toctitle{font-size:1.375em}
 body.toc2{padding-left:15em;padding-right:0}
+body.toc2 #header>h1:nth-last-child(2){border-bottom:1px solid #dddddf;padding-bottom:8px}
 #toc.toc2{margin-top:0!important;background:#f8f8f7;position:fixed;width:15em;left:0;top:0;border-right:1px solid #e7e7e9;border-top-width:0!important;border-bottom-width:0!important;z-index:1000;padding:1.25em 1em;height:100%;overflow:auto}
 #toc.toc2 #toctitle{margin-top:0;margin-bottom:.8rem;font-size:1.2em}
 #toc.toc2>ul{font-size:.9em;margin-bottom:0}
@@ -210,13 +211,10 @@ table.tableblock.fit-content>caption.title{white-space:nowrap;width:0}
 .admonitionblock>table td.content{padding-left:1.125em;padding-right:1.25em;border-left:1px solid #dddddf;color:rgba(0,0,0,.6);word-wrap:anywhere}
 .admonitionblock>table td.content>:last-child>:last-child{margin-bottom:0}
 .exampleblock>.content{border:1px solid #e6e6e6;margin-bottom:1.25em;padding:1.25em;background:#fff;border-radius:4px}
-.exampleblock>.content>:first-child{margin-top:0}
-.exampleblock>.content>:last-child{margin-bottom:0}
 .sidebarblock{border:1px solid #dbdbd6;margin-bottom:1.25em;padding:1.25em;background:#f3f3f2;border-radius:4px}
-.sidebarblock>:first-child{margin-top:0}
-.sidebarblock>:last-child{margin-bottom:0}
 .sidebarblock>.content>.title{color:#7a2518;margin-top:0;text-align:center}
-.exampleblock>.content>:last-child>:last-child,.exampleblock>.content .olist>ol>li:last-child>:last-child,.exampleblock>.content .ulist>ul>li:last-child>:last-child,.exampleblock>.content .qlist>ol>li:last-child>:last-child,.sidebarblock>.content>:last-child>:last-child,.sidebarblock>.content .olist>ol>li:last-child>:last-child,.sidebarblock>.content .ulist>ul>li:last-child>:last-child,.sidebarblock>.content .qlist>ol>li:last-child>:last-child{margin-bottom:0}
+.exampleblock>.content>:first-child,.sidebarblock>.content>:first-child{margin-top:0}
+.exampleblock>.content>:last-child,.exampleblock>.content>:last-child>:last-child,.exampleblock>.content .olist>ol>li:last-child>:last-child,.exampleblock>.content .ulist>ul>li:last-child>:last-child,.exampleblock>.content .qlist>ol>li:last-child>:last-child,.sidebarblock>.content>:last-child,.sidebarblock>.content>:last-child>:last-child,.sidebarblock>.content .olist>ol>li:last-child>:last-child,.sidebarblock>.content .ulist>ul>li:last-child>:last-child,.sidebarblock>.content .qlist>ol>li:last-child>:last-child{margin-bottom:0}
 .literalblock pre,.listingblock>.content>pre{border-radius:4px;overflow-x:auto;padding:1em;font-size:.8125em}
 @media screen and (min-width:768px){.literalblock pre,.listingblock>.content>pre{font-size:.90625em}}
 @media screen and (min-width:1280px){.literalblock pre,.listingblock>.content>pre{font-size:1em}}
@@ -332,7 +330,7 @@ a.image{text-decoration:none;display:inline-block}
 a.image object{pointer-events:none}
 sup.footnote,sup.footnoteref{font-size:.875em;position:static;vertical-align:super}
 sup.footnote a,sup.footnoteref a{text-decoration:none}
-sup.footnote a:active,sup.footnoteref a:active{text-decoration:underline}
+sup.footnote a:active,sup.footnoteref a:active,#footnotes .footnote a:first-of-type:active{text-decoration:underline}
 #footnotes{padding-top:.75em;padding-bottom:.75em;margin-bottom:.625em}
 #footnotes hr{width:20%;min-width:6.25em;margin:-.25em 0 .75em;border-width:1px 0 0}
 #footnotes .footnote{padding:0 .375em 0 .225em;line-height:1.3334;font-size:.875em;margin-left:1.2em;margin-bottom:.2em}
@@ -395,7 +393,7 @@ b.conum *{color:inherit!important}
 dt,th.tableblock,td.content,div.footnote{text-rendering:optimizeLegibility}
 h1,h2,p,td.content,span.alt,summary{letter-spacing:-.01em}
 p strong,td.content strong,div.footnote strong{letter-spacing:-.005em}
-p,blockquote,dt,td.content,span.alt,summary{font-size:1.0625rem}
+p,blockquote,dt,td.content,td.hdlist1,span.alt,summary{font-size:1.0625rem}
 p{margin-bottom:1.25rem}
 .sidebarblock p,.sidebarblock dt,.sidebarblock td.content,p.tableblock{font-size:1em}
 .exampleblock>.content{background:#fffef7;border-color:#e0e0dc;box-shadow:0 1px 4px #e0e0dc}
@@ -444,8 +442,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h1>Instalación de Jenkins en Ubuntu 22.04, 20.04, 18.04 LTS con Certbot SSL</h1>
 <div class="details">
 <span id="author" class="author">Herramientas y Métodos de Ingeniería del Software</span><br>
-<span id="revnumber">version 3.0,</span>
-<span id="revdate">Febrero-2024</span>
+<span id="revnumber">version 3.1,</span>
+<span id="revdate">Marzo-2026</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Tabla de contenidos</div>
@@ -519,7 +517,7 @@ Tutorial de instalación de Jenkins en Ubuntu 20.04, 18.04 LTS con Certbot SSL.
 <div class="title">Objetivos</div>
 <ul>
 <li>
-<p>Actualizar el sistema Ubuntu 22.04, 20.04, 18.04 en caso de que sea necesario</p>
+<p>Actualizar el sistema Ubuntu 24.04, 22.04, 20.04, 18.04 en caso de que sea necesario</p>
 </li>
 <li>
 <p>Instalar Jenkins (última versión)</p>
@@ -567,11 +565,11 @@ ejecutar</p>
 <pre class="highlight"><code class="language-bash" data-lang="bash">sudo reboot -h now</code></pre>
 </div>
 </div>
-<div class="imageblock">
+<div class="imageblock text-center figure-caption">
 <div class="content">
-<img src="images/Picture1.png" alt="Reiniciar el sistema">
+<img src="images/Picture1.png" alt="Reiniciar el sistema" width="60%">
 </div>
-<div class="title">Fig. 1. Reiniciar el sistema</div>
+<div class="title">Fig. 1. Reiniciar el sistem&lt;&lt;&lt;&lt;a</div>
 </div>
 </div>
 </div>
@@ -579,15 +577,15 @@ ejecutar</p>
 <h2 id="_instalar_java">3. Instalar Java</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Puede instalar el JDK con el siguiente comando, es importante instalar al menos la versión 1.8 del JDK, si no Jenkins no funcionará. Aunque ya recomienda usar <a href="https://www.jenkins.io/doc/administration/requirements/upgrade-java-guidelines/" target="_blank" rel="noopener">Java 17</a></p>
+<p>Puede instalar JDK con el siguiente comando, es importante instalar al menos la versión 1.8 del JDK, si no Jenkins no funcionará. Aunque ya recomienda usar <a href="https://www.jenkins.io/doc/book/installing/linux/" target="_blank" rel="noopener">Java 21</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">sudo apt install openjdk-17-jdk -y</code></pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">sudo apt install openjdk-21-jdk -y</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Primero comprobaremos si la versión activa de Java es la 17.</p>
+<p>Primero comprobaremos si la versión activa de Java es la 21.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -596,7 +594,7 @@ ejecutar</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/java-version-17.png" alt="java -version">
+<img src="images/java-version-21.png" alt="java -version">
 </div>
 </div>
 <div class="paragraph">
@@ -624,7 +622,7 @@ ejecutar</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-conf" data-lang="conf">JAVA_HOME="/usr/lib/jvm/java-17-openjdk-amd64"</code></pre>
+<pre class="highlight"><code class="language-conf" data-lang="conf">JAVA_HOME="/usr/lib/jvm/java-21-openjdk-amd64"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -648,7 +646,7 @@ ejecutar</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>/usr/lib/jvm/java-17-openjdk-amd64</pre>
+<pre>/usr/lib/jvm/java-21-openjdk-amd64</pre>
 </div>
 </div>
 </div>
@@ -659,7 +657,7 @@ ejecutar</p>
 <h2 id="_instalación_de_jenkins_mediante_paquetes">4. Instalación de Jenkins mediante paquetes</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Instalaremos Jenkins en un sistema operativo basado en Ubuntu 22.04 LTS, 20.04 LTS o 18.04 LTS. La instalación consiste en añadir los repositorios de Jenkins, actualizar nuestro sistema de repositorios y una vez acabado, instalar Jenkins.</p>
+<p>Instalaremos Jenkins en un sistema operativo basado en Ubuntu 24.04 LTS, 22.04 LTS, 20.04 LTS o 18.04 LTS. La instalación consiste en añadir los repositorios de Jenkins, actualizar nuestro sistema de repositorios y una vez acabado, instalar Jenkins.</p>
 </div>
 <div class="admonitionblock important">
 <table>
@@ -677,19 +675,19 @@ Como prerrequisito es necesario tener instalado Java. Compruebe que está config
 <p>Instalaremos Jenkins de la rama estable (versión Long-Term Support, LTS). Hay que tener en cuenta que esta versión de Jenkins se actualiza cada 12 semanas. Si queréis más información sobre la versión LTS de Jenkins, os dejo el enlace <a href="https://www.jenkins.io/download/lts/">aqui</a>.</p>
 </div>
 <div class="paragraph">
-<p>Lo primero que haremos es añadir los repositorios de Jenkins e instalarlo mediante apt-get:</p>
+<p>Las <a href="https://www.jenkins.io/doc/book/installing/linux/#debian-stable">intrucciones oficiales</a>  Lo primero que haremos es añadir los repositorios de Jenkins e instalarlo mediante apt-get:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">sudo wget -O /usr/share/keyrings/jenkins-keyring.asc \
-    https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key</code></pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">sudo wget -O /etc/apt/keyrings/jenkins-keyring.asc \
+  https://pkg.jenkins.io/debian-stable/jenkins.io-2026.key</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
-    https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
-    /etc/apt/sources.list.d/jenkins.list &gt; /dev/null</code></pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">echo "deb [signed-by=/etc/apt/keyrings/jenkins-keyring.asc]" \
+  https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
+  /etc/apt/sources.list.d/jenkins.list &gt; /dev/null</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1349,10 +1347,10 @@ sudo service nginx restart</code></pre>
 <p><b class="button">Añadir JDK</b></p>
 </li>
 <li>
-<p>Nombre: <strong>OpenJDK-11</strong></p>
+<p>Nombre: <strong>OpenJDK-21</strong></p>
 </li>
 <li>
-<p>JAVA_HOME: <strong>/usr/lib/jvm/java-11-openjdk-amd64/</strong></p>
+<p>JAVA_HOME: <strong>/usr/lib/jvm/java-21-openjdk-amd64/</strong></p>
 <div class="imageblock">
 <div class="content">
 <img src="images/Picture23.png" alt="Instalación de JDK">
@@ -1498,18 +1496,10 @@ sudo service nginx restart</code></pre>
 </div>
 </li>
 <li>
-<p>Cobertura plugin</p>
+<p>Coverage plugin</p>
 <div class="imageblock">
 <div class="content">
-<img src="images/Picture27.png" alt="Cobertura plugin">
-</div>
-</div>
-</li>
-<li>
-<p>JaCoCo (Java Code Coverage)</p>
-<div class="imageblock">
-<div class="content">
-<img src="images/Picture28.png" alt="JaCoCo plugin">
+<img src="images/coverage-plugin.png" alt="Coverage plugin">
 </div>
 </div>
 </li>
@@ -1525,18 +1515,18 @@ sudo service nginx restart</code></pre>
 <p>SonarQube</p>
 <div class="imageblock">
 <div class="content">
-<img src="images/Picture32.png" alt="Sonar plugin">
+<img src="images/sonarqube-plugin.png" alt="SonarQube plugin">
 </div>
 </div>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>Tras ello, hacemos clic en <strong>Descargar ahora e instalar después de reiniciar</strong>. Y marcamos <strong>Reiniciar Jenkins después de la instalación</strong></p>
+<p>Tras ello, hacemos clic en <strong>Instalar</strong>. Y marcamos <strong>Reiniciar Jenkins después de la instalación</strong></p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/Picture30.png" alt="Descargar plugins">
+<img src="images/reiniciar-jenkins-tras-plugins.png.png" alt="Descargar plugins">
 </div>
 </div>
 </div>
@@ -1791,8 +1781,8 @@ sudo apt-get upgrade -y</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 3.0<br>
-Last updated 2024-02-24 19:23:10 +0100
+Version 3.1<br>
+Last updated 2026-03-05 18:37:58 +0100
 </div>
 </div>
 <style>
