@@ -507,7 +507,12 @@ Entramos en la configuración del nuevo proyecto. Seleccionamos la sección  *Bu
 * En comando escribimos
 +
 [source,bash]
+----
 top -b -n 1 | head -n 5
+whoami
+git --version
+java -version
+----
 
 * Pulsamos *Guardar*
 
@@ -591,6 +596,10 @@ image::Picture26.png[Maven plugin]
 * Coverage plugin
 +
 image::coverage-plugin.png[Coverage plugin]
+
+* Warnings plugin
++
+image::warnings-plugin.png[Warnings plugin]
 
 * GitLab 
 +
